@@ -1,17 +1,65 @@
 <script setup>
-import HelloWorld from './components/HelloWorld.vue'
+import StatsCard from './components/StatsCard.vue'
+import { ref } from 'vue'
+
 </script>
 
 <template>
-  <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
-  </div>
-  <HelloWorld msg="Vite + Vue" />
+
+  <n-layout>
+    <n-layout-header>
+      <div>
+        <a href="https://vitejs.dev" target="_blank">
+          <img src="/vite.svg" class="logo" alt="Vite logo" />
+        </a>
+        <a href="https://vuejs.org/" target="_blank">
+          <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
+        </a>
+      </div>
+    </n-layout-header>
+    <n-layout-content content-style="padding: 24px;">
+
+      <n-grid cols="1 s:3 m:4 l:5 xl:6 2xl:7" responsive="screen">
+        <n-grid-item>
+          <StatsCard />
+        </n-grid-item>
+        <n-grid-item>
+          <StatsCard />
+        </n-grid-item>
+        <n-grid-item>
+          <StatsCard />
+        </n-grid-item>
+        <n-grid-item>
+          <StatsCard />
+        </n-grid-item>
+        <n-grid-item>
+          <StatsCard />
+        </n-grid-item>
+        <n-grid-item>
+          <StatsCard />
+        </n-grid-item>
+        <n-grid-item>
+          <StatsCard />
+        </n-grid-item>
+        <n-grid-item>
+          <StatsCard />
+        </n-grid-item>
+        <n-grid-item>
+          <StatsCard />
+        </n-grid-item>
+        <n-grid-item>
+          <StatsCard />
+        </n-grid-item>
+      </n-grid>
+
+    </n-layout-content>
+    <n-layout-footer>
+      Footer
+    </n-layout-footer>
+  </n-layout>
+
+
+
 </template>
 
 <style scoped>
@@ -26,4 +74,9 @@ import HelloWorld from './components/HelloWorld.vue'
 .logo.vue:hover {
   filter: drop-shadow(0 0 2em #42b883aa);
 }
+
+.n-card {
+  transform: translate3d(0px, 20px, 0) scale(0.95);
+}
+
 </style>
