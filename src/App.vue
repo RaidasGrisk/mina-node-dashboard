@@ -19,7 +19,7 @@ import { ref } from 'vue'
     </n-layout-header>
     <n-layout-content content-style="padding: 24px;">
 
-      <n-grid cols="1 s:3 m:4 l:5 xl:6 2xl:7" responsive="screen">
+      <n-grid :x-gap="12" :y-gap="12" cols="1 s:2 m:3 l:4 xl:5 2xl:5" responsive="screen">
         <n-grid-item>
           <StatsCard />
         </n-grid-item>
