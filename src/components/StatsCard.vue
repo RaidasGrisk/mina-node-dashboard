@@ -19,6 +19,7 @@ const footerStyle = {
 const randColor = Math.floor(Math.random()*16777215).toString(16)
 const color = `linear-gradient(-45deg, #${randColor} 0%, #00ff87 100% )`
 
+// data loading
 const loading = ref(true)
 
 const reload = async () => {
@@ -27,15 +28,22 @@ const reload = async () => {
   loading.value = false
 }
 
-const showModal = ref(false)
-
 onMounted( async () => {
   await new Promise(r => setTimeout(r, 2000))
   loading.value = false
 })
 
-
-
+// other vars
+const showModal = ref(false)
+const props = defineProps({
+  data: {type: Object, default: {
+    chartName: { type: String, default: '//' },
+    additionalValues: {type: Array, default: []},
+    mainValue: {type: Number, default: null},
+    changeValue: {type: Number, default: null},
+  }}
+})
+console.log('FROM StatsCard, props ', props)
 </script>
 
 <template>
@@ -52,7 +60,7 @@ onMounted( async () => {
     <template #header>
       <n-skeleton v-if="loading" text width="60%" :sharp="false"/>
       <template v-else>
-        chart name
+        {{ props.data.chartName }}
       </template>
     </template>
 
@@ -101,11 +109,27 @@ onMounted( async () => {
       </n-space>
     </div>
     <template v-else>
-    Card Content
+
+      <n-space size="small" v-for="obj in props.data.additionalValues">
+        <n-text strong>
+          <n-number-animation
+            :from="0"
+            :to="obj.value"
+            :active="true"
+            :precision="obj.precision | 0"
+          />
+        </n-text>
+        <n-text depth="3">
+          {{ obj.text }}
+        </n-text>
+        <br>
+      </n-space>
+
+    <slot></slot>
     </template>
-    <template #footer>
+    <!-- <template #footer>
       #footer
-    </template>
+    </template> -->
   </n-card>
 
   <template>

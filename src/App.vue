@@ -1,7 +1,12 @@
 <script setup>
 import StatsCard from './components/StatsCard.vue'
+import Chart1 from './components/Chart1.vue'
 import { ref } from 'vue'
+import { Chart, registerables } from "chart.js";
 
+Chart.register(...registerables);
+Chart.defaults.font.size = 10
+Chart.defaults.font.family = '"Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif'
 </script>
 
 <template>
@@ -21,7 +26,7 @@ import { ref } from 'vue'
 
       <n-grid :x-gap="12" :y-gap="12" cols="1 s:2 m:3 l:4 xl:5 2xl:5" responsive="screen">
         <n-grid-item>
-          <StatsCard />
+          <Chart1 />
         </n-grid-item>
         <n-grid-item>
           <StatsCard />
