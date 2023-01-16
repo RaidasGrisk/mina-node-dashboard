@@ -10,7 +10,7 @@
           <n-space justify="center">
             <n-tooltip trigger="hover">
               <template #trigger>
-                <n-button tertiary circle type="info" tag="a" href="https://github.com/RaidasGrisk/zk-github-oracle" target="_blank">
+                <n-button tertiary circle type="info" tag="a" href="https://github.com/RaidasGrisk/mina-node-dashboard" target="_blank">
                   <template #icon>
                     <n-icon>
                       <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 496 512">
