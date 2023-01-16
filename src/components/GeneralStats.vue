@@ -32,7 +32,7 @@ defineExpose({
 <template>
 
   <div style="text-align: center">
-    <n-space justify="center" :size="150">
+    <n-space justify="center" :size="[150, 50]">
 
       <n-statistic label="Epoch">
         <template #prefix>
