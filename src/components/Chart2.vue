@@ -49,7 +49,7 @@ const chartProps = {
   ],
   mainValue: null,
   changeValue: null,
-  description: 'The number of active validators, i.e. validators that produced at least 1 block ducirng the last 1000 blocks.'
+  description: 'The number of active validators, i.e. validators that produced at least 1 block durirng the last 1000 blocks.'
 }
 
 const loading = ref(false)

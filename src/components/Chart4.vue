@@ -1,0 +1,154 @@
+<script setup>
+import { ref, onMounted } from 'vue'
+import StatsCard from '../components/StatsCard.vue'
+import { useThemeVars } from 'naive-ui'
+
+const themeVars = useThemeVars()
+
+const data = ref({})
+const addressMapping = ref({})
+
+const chartProps = {
+  chartName: 'Latest block creators',
+  additionalValues: [
+    {value: null, text: null},
+    {value: null, text: null, precision: 0}
+  ],
+  mainValue: null,
+  changeValue: null,
+  description: 'Public keys of the latest block creators.'
+}
+
+const loading = ref(false)
+
+const loadData = async () => {
+
+  loading.value = true
+
+  // config
+  const url = 'https://graphql.minaexplorer.com/'
+
+  // API request
+  const response = await fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      query: `
+      query MyQuery {
+        blocks(limit: 30, sortBy: BLOCKHEIGHT_DESC) {
+          creator
+          blockHeight
+          stateHash
+        }
+      }
+        `
+    }),
+  })
+
+  let response_ = await response.json()
+
+  // helper functions
+  const filterUnique = (value, index, self) => {
+    return self.findIndex(v => v.blockHeight === value.blockHeight) === index
+  }
+
+  // reverse
+  response_ = response_.data.blocks.reverse()
+
+  // filter out duplicates
+  response_ = response_.filter(filterUnique)
+
+  // trim
+  response_ = response_.slice(-6)
+
+  // set data element values
+  data.value = response_.map(i => i.creator)
+
+  // run the other query to get the number of blocks produced by each address
+  // start of by mapping address to number of blocks produced
+  const address_mapping = {}
+
+  // https://dev.to/viricruz/fetch-with-promise-all-and-async-await-4ioe
+  for (const index in response_) {
+    let response_addr = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        query: `
+        query MyQuery {
+          blocks(query: {creator_in: "${response_[index].creator}"}, limit: 100) {
+            blockHeight
+          }
+        }
+          `
+      }),
+    })
+
+    // add the result to mapping
+    let response_addr_ = await response_addr.json()
+    address_mapping[response_[index].creator] = response_addr_.data.blocks.length
+
+  }
+
+  addressMapping.value = address_mapping
+
+  loading.value = false
+}
+
+onMounted( async () => {
+  loadData()
+})
+
+</script>
+
+<template>
+  <StatsCard :data="chartProps" :loading="loading" @reload="loadData">
+    <br>
+    <n-space v-for="address in data">
+
+      <n-text code class="codeStyles">
+        <n-text depth="2" type="success">
+          <a :href="'https://minaexplorer.com/wallet/' + address" target="_blank">
+            {{ address.slice(0, 12) + '...' + address.slice(-12) }}
+          </a>
+        </n-text>
+      </n-text>
+      <n-divider vertical />
+
+      <n-tooltip trigger="hover" placement="right" style="font-size: 70%;">
+        <template #trigger>
+          <n-text depth="3" style="margin-top: 30px;">
+            {{ addressMapping[address] == 100 ? addressMapping[address].toString() + '+' : addressMapping[address] }}
+          </n-text>
+        </template>
+        Total blocks created
+      </n-tooltip>
+
+    </n-space>
+  </StatsCard>
+</template>
+
+<style scoped>
+
+.codeStyles {
+  font-size: 0.8em
+}
+
+a {
+  color: v-bind(themeVars.infoColor);
+  text-decoration: inherit;
+}
+
+a:hover {
+  color: v-bind(themeVars.infoColorHover);
+}
+
+a:link:active, a:visited {
+  color: v-bind(themeVars.successColor);;
+}
+
+</style>

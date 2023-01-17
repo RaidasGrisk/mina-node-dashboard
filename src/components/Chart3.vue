@@ -49,7 +49,7 @@ const chartProps = {
   ],
   mainValue: null,
   changeValue: null,
-  description: 'The number of snark workers, i.e. workers that proved at least 1 block ducirng the last 1000 blocks.'
+  description: 'The number of snark workers, i.e. workers that proved at least 1 block durirng the last 1000 blocks.'
 }
 
 const loading = ref(false)
