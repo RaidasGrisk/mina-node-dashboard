@@ -61,7 +61,7 @@ const loadData = async () => {
   response_ = response_.filter(filterUnique)
 
   // trim
-  response_ = response_.slice(-6)
+  response_ = response_.slice(-7)
 
   // set data element values
   data.value = response_.map(i => i.creator)
@@ -109,7 +109,6 @@ onMounted( async () => {
 
 <template>
   <StatsCard :data="chartProps" :loading="loading" @reload="loadData">
-    <br>
     <n-space v-for="address in data">
 
       <n-text code class="codeStyles">
@@ -119,11 +118,11 @@ onMounted( async () => {
           </a>
         </n-text>
       </n-text>
-      <n-divider vertical />
+      <n-divider vertical style="height: 12px;"/>
 
       <n-tooltip trigger="hover" placement="right" style="font-size: 70%;">
         <template #trigger>
-          <n-text depth="3" style="margin-top: 30px;">
+          <n-text depth="3" style="margin-top: 30px; font-size: 0.90em">
             {{ addressMapping[address] == 100 ? addressMapping[address].toString() + '+' : addressMapping[address] }}
           </n-text>
         </template>
