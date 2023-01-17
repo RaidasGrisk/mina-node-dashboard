@@ -22,7 +22,7 @@ block time (seconds/minutes in between blocks)
 latest block miners (hashes with urls to explorer)  
 tx fees in the block (in mina)  
 balance of the winnerAccount (in Mina)  
-number of transactions in a block
+number of transactions in a block  
 world map with nodes  
 active stake  
 TPS / TPD  
