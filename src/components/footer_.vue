@@ -1,4 +1,17 @@
 <script setup>
+
+import { ref, onMounted } from 'vue'
+
+const data = ref([])
+
+onMounted( async () => {
+  const url = 'https://api.github.com/repos/MinaProtocol/mina/releases'
+  let response = await fetch(url, {  method: 'GET' })
+  response = await response.json()
+  data.value = response
+})
+
+
 </script>
 
 <template>
@@ -27,8 +40,33 @@
         </n-space>
       </n-tag>
     </n-space>
+    <br><br>
+    <n-text depth="3" v-if="data.length > 0">
+      <n-space justify="center">
+        <n-space vertical>
+          <span>
+            Latest <b>Mina</b> stable release:
+            <a :href="data[0].html_url" target="_blank">
+              {{ data[0].tag_name }}
+            </a>
+          </span>
+          <span>
+            Released at:
+            <n-time :time="new Date(data[0].published_at)" format="yyyy-MM-dd" />
+          </span>
+          <span>
+          </span>
+        </n-space>
+      </n-space>
+    </n-text>
   </div>
 </template>
 
 <style scoped>
+  .centered-text {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+  }
 </style>

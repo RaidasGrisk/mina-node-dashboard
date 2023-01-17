@@ -46,10 +46,10 @@ const emits = defineEmits(['reload'])
     hoverable
   >
     <template #header>
-      <n-skeleton v-if="props.loading" text height="25px" width="60%" :sharp="false"/>
-      <template v-else>
+      <!-- <n-skeleton v-if="props.loading" text height="25px" width="60%" :sharp="false"/>
+      <template v-else> -->
         {{ props.data.chartName }}
-      </template>
+      <!-- </template> -->
     </template>
 
     <template #header-extra>

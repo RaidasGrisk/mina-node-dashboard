@@ -5,6 +5,7 @@ import Chart1 from './components/Chart1.vue'
 import Chart2 from './components/Chart2.vue'
 import Chart3 from './components/Chart3.vue'
 import Chart4 from './components/Chart4.vue'
+import Chart5 from './components/Chart5.vue'
 import footer_ from './components/footer_.vue'
 import { ref } from 'vue'
 import { useThemeVars } from 'naive-ui'
@@ -86,7 +87,7 @@ const reload = () => {
                 <Chart4 />
               </n-grid-item>
               <n-grid-item>
-                <StatsCard />
+                <Chart5 />
               </n-grid-item>
               <n-grid-item>
                 <StatsCard />

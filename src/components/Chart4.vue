@@ -71,6 +71,8 @@ const loadData = async () => {
   const address_mapping = {}
 
   // https://dev.to/viricruz/fetch-with-promise-all-and-async-await-4ioe
+  // modify to count the blocks made this epoch only..?
+  // filter out unique blockheight
   for (const index in response_) {
     let response_addr = await fetch(url, {
       method: 'POST',
