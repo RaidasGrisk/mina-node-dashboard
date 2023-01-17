@@ -55,13 +55,13 @@ const loadData = async () => {
   }
 
   // reverse
-  response_ = response_.data.blocks.reverse()
+  response_ = response_.data.blocks
 
   // filter out duplicates
   response_ = response_.filter(filterUnique)
 
   // trim
-  response_ = response_.slice(-7)
+  response_ = response_.slice(0, 7)
 
   // set data element values
   data.value = response_.map(i => i.creator)
