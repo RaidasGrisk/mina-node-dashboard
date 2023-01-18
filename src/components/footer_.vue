@@ -19,7 +19,7 @@ onMounted( async () => {
     <n-space justify="center">
       <n-tag round :bordered="true" :size="'large'" style="padding: 20px; min-height: 130px;">
         <n-space justify="center" vertical>
-          <n-h6>Source code</n-h6>
+          <n-h5 style="font-size: 90%">Source code</n-h5>
           <n-space justify="center">
             <n-tooltip trigger="hover">
               <template #trigger>

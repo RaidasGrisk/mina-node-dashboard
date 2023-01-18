@@ -45,7 +45,7 @@ const chartProps = {
   chartName: 'Top validators by stake',
   additionalValues: [
     {value: null, text: '% of stake held by top 5 validators', precision: 1},
-    {value: null, text: 'Gini coefficient', precision: 1}
+    {value: null, text: 'Gini coefficient', precision: 2}
   ],
   mainValue: null,
   changeValue: null,

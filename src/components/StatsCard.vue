@@ -103,7 +103,7 @@ const emits = defineEmits(['reload'])
     <template v-else>
 
       <n-space size="small" v-for="obj in props.data.additionalValues">
-        <template v-if="obj.value | obj.text">
+        <template v-if="(obj.value !== null) | obj.text">
           <n-text strong>
             <n-number-animation
               :from="0"

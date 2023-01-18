@@ -70,7 +70,7 @@ const loadData = async () => {
     body: JSON.stringify({
       query: `
       query MyQuery {
-        snarks(sortBy: DATETIME_DESC, limit: 100) {
+        snarks(sortBy: DATETIME_DESC, limit: 1000, query: {canonical: true}) {
           prover
           blockHeight
         }
@@ -96,7 +96,14 @@ const loadData = async () => {
     }
   }
 
-  // response_ = response_.slice(-100)
+  // helper functions
+  // const filterUnique = (value, index, self) => {
+  //   return self.findIndex(v => v.blockHeight === value.blockHeight) === index
+  // }
+
+  // response_ = response_.filter(filterUnique)
+
+  response_ = response_.slice(-100)
 
   // set data element values
   data.value = {

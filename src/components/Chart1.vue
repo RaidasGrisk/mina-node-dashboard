@@ -70,7 +70,7 @@ const loadData = async () => {
     body: JSON.stringify({
       query: `
       query MyQuery {
-        blocks(sortBy: DATETIME_DESC, limit: 100) {
+        blocks(sortBy: DATETIME_DESC, limit: 50, query: {canonical: true}) {
           dateTime
           blockHeight
         }
@@ -82,9 +82,9 @@ const loadData = async () => {
   let response_ = await response.json()
 
   // helper functions
-  const filterUnique = (value, index, self) => {
-    return self.findIndex(v => v.blockHeight === value.blockHeight) === index
-  }
+  // const filterUnique = (value, index, self) => {
+  //   return self.findIndex(v => v.blockHeight === value.blockHeight) === index
+  // }
 
   const subtractDates = (prev, curr) => {
     const prev_ = new Date(prev)
@@ -97,7 +97,7 @@ const loadData = async () => {
   response_ = response_.data.blocks.reverse()
 
   // filter out duplicates
-  response_ = response_.filter(filterUnique)
+  // response_ = response_.filter(filterUnique)
 
   // subtract dates to get the difference
   for (let i = 1; i < response_.length; i++) {

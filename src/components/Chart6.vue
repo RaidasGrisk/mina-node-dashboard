@@ -3,7 +3,7 @@ import { ref, onMounted } from 'vue'
 import StatsCard from '../components/StatsCard.vue'
 import { useThemeVars } from 'naive-ui'
 
-import { LineChart } from 'vue-chart-3';
+import { BarChart } from 'vue-chart-3';
 import { Chart, registerables } from "chart.js";
 
 Chart.register(...registerables);
@@ -42,14 +42,14 @@ const options = {
 }
 
 const chartProps = {
-  chartName: 'Active validators',
+  chartName: 'Block creation rewards',
   additionalValues: [
-    {value: null, text: 'validators'},
-    {value: null, text: 'new validators in the last 50 blocks', precision: 0}
+    {value: null, text: 'MINA, last block', precision: 0},
+    {value: null, text: 'MINA, on average last 20 blocks', precision: 0}
   ],
   mainValue: null,
   changeValue: null,
-  description: 'The number of active validators, i.e. validators that produced at least 1 block durirng the last 1000 blocks.'
+  description: ''
 }
 
 const loading = ref(false)
@@ -70,8 +70,10 @@ const loadData = async () => {
     body: JSON.stringify({
       query: `
       query MyQuery {
-        blocks(sortBy: DATETIME_DESC, limit: 1000, query: {canonical: true}) {
-          creator
+        blocks(query: {canonical: true}, limit: 50, sortBy: BLOCKHEIGHT_DESC) {
+          transactions {
+            coinbase
+          }
           blockHeight
         }
       }
@@ -81,45 +83,25 @@ const loadData = async () => {
 
   let response_ = await response.json()
 
-  // helper functions
-  const filterUnique = (value, index, self) => {
-    return self.findIndex(v => v.blockHeight === value.blockHeight) === index
-  }
-
   // reverse
   response_ = response_.data.blocks.reverse()
-
-  // filter out duplicates
-  response_ = response_.filter(filterUnique)
-
-  // subtract dates to get the difference
-  const uniqueAddresses = new Set()
-  for (let i = 1; i < response_.length; i++) {
-
-    if (uniqueAddresses.has(response_[i].creator)) {
-      response_[i].uniqueAddresses = response_[i-1].uniqueAddresses | 0
-    } else {
-      uniqueAddresses.add(response_[i].creator)
-      response_[i].uniqueAddresses = response_[i-1].uniqueAddresses + 1
-    }
-  }
-
-  response_ = response_.slice(-100)
 
   // set data element values
   data.value = {
     labels: response_.map(i => i.blockHeight),
     datasets: [
       {
-        data: response_.map(i => i.uniqueAddresses),
+        data: response_.map(i => i.transactions.coinbase / 1000000000),
         backgroundColor: [themeVars.value.infoColor],
       },
     ],
   }
 
   // set other values
-  chartProps.additionalValues[0].value = response_.slice(-1)[0].uniqueAddresses
-  chartProps.additionalValues[1].value = response_.slice(-1)[0].uniqueAddresses - response_.slice(-50)[0].uniqueAddresses
+  chartProps.additionalValues[0].value = response_.slice(-1)[0].transactions.coinbase / 1000000000
+  chartProps.additionalValues[1].value = response_.slice(-20).reduce(
+    (total, next) => total + next.transactions.coinbase / 1000000000, 0
+  ) / 20
 
   loading.value = false
 }
@@ -132,7 +114,7 @@ onMounted( async () => {
 
 <template>
   <StatsCard :data="chartProps" :loading="loading" @reload="loadData">
-    <LineChart :chartData="data" :width="150" :height="100" :options="options" />
+    <BarChart :chartData="data" :width="150" :height="100" :options="options" />
   </StatsCard>
 </template>
 

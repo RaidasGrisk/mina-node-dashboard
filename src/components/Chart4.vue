@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import StatsCard from '../components/StatsCard.vue'
 import { useThemeVars } from 'naive-ui'
 
@@ -7,6 +7,12 @@ const themeVars = useThemeVars()
 
 const data = ref({})
 const addressMapping = ref({})
+
+// make responsive width
+const cardRef = ref(null)
+const getNumberOfChars = computed(() => {
+  // return cardRef.value ? Math.round(cardRef.value[0].$el.clientWidth / 19) : 12
+})
 
 const chartProps = {
   chartName: 'Latest block creators',
@@ -37,7 +43,7 @@ const loadData = async () => {
     body: JSON.stringify({
       query: `
       query MyQuery {
-        blocks(limit: 30, sortBy: BLOCKHEIGHT_DESC) {
+        blocks(limit: 30, sortBy: BLOCKHEIGHT_DESC, query: {canonical: true}) {
           creator
           blockHeight
           stateHash
@@ -82,7 +88,7 @@ const loadData = async () => {
       body: JSON.stringify({
         query: `
         query MyQuery {
-          blocks(query: {creator_in: "${response_[index].creator}"}, limit: 100) {
+          blocks(query: {creator_in: "${response_[index].creator}", canonical: true}, limit: 100) {
             blockHeight
           }
         }
@@ -109,7 +115,7 @@ onMounted( async () => {
 
 <template>
   <StatsCard :data="chartProps" :loading="loading" @reload="loadData">
-    <n-space v-for="address in data">
+    <n-space v-for="address in data" ref="cardRef">
 
       <n-text code class="codeStyles">
         <n-text depth="2" type="success">

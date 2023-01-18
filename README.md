@@ -16,7 +16,7 @@ mina node latest version stable release (https://github.com/MinaProtocol/mina/ta
 distribution of nodes running different versions nodes?  
 
 ##### time series / other
-numer of validators  
+number of validators  
 number of snark workers  
 block time (seconds/minutes in between blocks)  
 latest block miners (hashes with urls to explorer)  
@@ -26,3 +26,4 @@ number of transactions in a block
 world map with nodes  
 active stake  
 TPS / TPD  
+block coinbase reward?
