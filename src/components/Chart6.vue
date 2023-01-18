@@ -42,7 +42,7 @@ const options = {
 }
 
 const chartProps = {
-  chartName: 'Block creation rewards',
+  chartName: 'Block rewards',
   additionalValues: [
     {value: null, text: 'MINA, last block', precision: 0},
     {value: null, text: 'MINA, on average last 20 blocks', precision: 0}
