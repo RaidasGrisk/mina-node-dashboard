@@ -42,7 +42,7 @@ const options = {
 }
 
 const chartProps = {
-  chartName: 'Active validators',
+  chartName: 'Active validators 👷',
   additionalValues: [
     {value: null, text: 'validators'},
     {value: null, text: 'new validators in the last 50 blocks', precision: 0}

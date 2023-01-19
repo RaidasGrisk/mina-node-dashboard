@@ -153,6 +153,7 @@ const emits = defineEmits(['reload'])
 
 .gradientShadow {
   transform: translate3d(0, 0, 0) scale(1);
+  transition: transform .6s ease-out;
 }
 
 .gradientShadow:before {
@@ -164,7 +165,7 @@ const emits = defineEmits(['reload'])
   bottom: 0;
   left: 0;
   background: v-bind(color);
-  transform: translate3d(25px, 0, 0) scale(0.775);
+  transform: translate3d(0, 25px, 0) scale(0.7);
   filter: blur(20px);
   opacity: var(0.7);
   transition: opacity 0.3s;
@@ -186,6 +187,10 @@ const emits = defineEmits(['reload'])
   left: 0;
   background: inherit;
   border-radius: inherit;
+}
+
+.gradientShadow:hover {
+  /* transform: scale(1.01); */
 }
 
 </style>

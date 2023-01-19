@@ -42,7 +42,7 @@ const options = {
 }
 
 const chartProps = {
-  chartName: 'Block time',
+  chartName: 'Block time ⌛',
   additionalValues: [
     {value: null, text: 'minutes'},
     {value: null, text: 'avg. over the last 20 blocks', precision: 2}

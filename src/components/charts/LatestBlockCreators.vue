@@ -1,5 +1,6 @@
 <script setup>
 import { ref, onMounted, computed } from 'vue'
+import { useElementSize } from '@vueuse/core'
 import StatsCard from '../../components/StatsCard.vue'
 import { useThemeVars } from 'naive-ui'
 
@@ -9,15 +10,11 @@ const data = ref({})
 const addressMapping = ref({})
 
 // make responsive width
-// const cardRef = ref(null)
-// const getNumberOfChars = computed(() => {
-//   return cardRef.value ? Math.round(cardRef.value[0].$el.clientWidth / 19) : 12
-//   return cardRef.value ? cardRef.value.$el.clientWidth : null
-//   return cardRef._value ? cardRef._value.clientWidth : cardRef
-// })
+const statscard_width_ref = ref(null)
+const { width, height } = useElementSize(statscard_width_ref)
 
 const chartProps = {
-  chartName: 'Latest block creators',
+  chartName: 'Latest block creators‍',
   additionalValues: [
     {value: null, text: null},
     {value: null, text: null, precision: 0}
@@ -69,7 +66,7 @@ const loadData = async () => {
   response_ = response_.filter(filterUnique)
 
   // trim
-  response_ = response_.slice(0, 7)
+  response_ = response_.slice(0, 6)
 
   // set data element values
   data.value = response_.map(i => i.creator)
@@ -117,27 +114,29 @@ onMounted( async () => {
 
 <template>
   <StatsCard :data="chartProps" :loading="loading" @reload="loadData">
-    <n-space v-for="address in data">
-
-      <n-text code class="codeStyles">
-        <n-text depth="2" type="success">
-          <a :href="'https://minaexplorer.com/wallet/' + address" target="_blank">
-            {{ address.slice(0, 12) + '...' + address.slice(-12) }}
-          </a>
-        </n-text>
-      </n-text>
-      <n-divider vertical style="height: 12px;"/>
-
-      <n-tooltip trigger="hover" placement="right" style="font-size: 70%;">
-        <template #trigger>
-          <n-text depth="3" style="margin-top: 30px; font-size: 0.90em">
-            {{ addressMapping[address] == 100 ? addressMapping[address].toString() + '+' : addressMapping[address] }}
+    <n-collapse-transition :appear="true">
+      <div ref="statscard_width_ref" style="width: 100%;" />
+      <n-space v-for="address in data" justify="space-between">
+        <n-space :size="20">
+          <n-text code class="codeStyles">
+            <n-text depth="2" type="success">
+              <a :href="'https://minaexplorer.com/wallet/' + address" target="_blank">
+                {{ address.slice(0, Math.round(width / 20)) + '...' + address.slice(-Math.round(width / 20)) }}
+              </a>
+            </n-text>
           </n-text>
-        </template>
-        Total blocks created
-      </n-tooltip>
-
-    </n-space>
+          <n-divider vertical style="height: 12px;"/>
+        </n-space>
+        <n-tooltip trigger="hover" placement="right" style="font-size: 70%;">
+          <template #trigger>
+            <n-text depth="3" style="margin-top: 30px; font-size: 0.90em">
+              {{ addressMapping[address] == 100 ? addressMapping[address].toString() + '+' : addressMapping[address] }}
+            </n-text>
+          </template>
+          Total blocks created
+        </n-tooltip>
+      </n-space>
+    </n-collapse-transition>
   </StatsCard>
 </template>
 

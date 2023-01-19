@@ -42,7 +42,7 @@ const options = {
 }
 
 const chartProps = {
-  chartName: 'Fees per block',
+  chartName: 'Fees per block 🏷️',
   additionalValues: [
     {value: null, text: 'MINA, last block', precision: 2},
     {value: null, text: '% change over the last 20 blocks', precision: 0}
