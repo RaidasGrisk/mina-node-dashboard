@@ -2,6 +2,7 @@
 import header_ from './components/header_.vue'
 import footer_ from './components/footer_.vue'
 import GeneralStats from './components/GeneralStats.vue'
+import StatsCard from './components/StatsCard.vue'
 
 import BlockTime from './components/charts/BlockTime.vue'
 import ActiveValidators from './components/charts/ActiveValidators.vue'
@@ -34,7 +35,7 @@ const reload = () => {
     <n-notification-provider>
       <n-loading-bar-provider>
 
-        <n-layout>
+        <n-layout content-style="max-width: 132vh; margin: 0 auto; padding: 2em;">
           <header_ @logoClick="reload" />
           <n-layout-content content-style="padding: 3em 0em 3em 0em;">
             <GeneralStats ref="generalStatsRef"/>
@@ -64,13 +65,26 @@ const reload = () => {
                 <n-grid-item>
                   <BlockTransactions />
                 </n-grid-item>
+                <n-grid-item>
+                  <StatsCard />
+                </n-grid-item>
+                <n-grid-item>
+                  <StatsCard />
+                </n-grid-item>
+                <n-grid-item>
+                  <StatsCard />
+                </n-grid-item>
+                <n-grid-item>
+                  <StatsCard />
+                </n-grid-item>
               </n-grid>
             </div>
           </n-layout-content>
-          <n-layout-footer bordered>
-            <footer_ />
-          </n-layout-footer>
         </n-layout>
+
+        <n-layout-footer bordered>
+          <footer_ />
+        </n-layout-footer>
 
       </n-loading-bar-provider>
     </n-notification-provider>

@@ -16,10 +16,29 @@ onMounted( async () => {
 
 <template>
   <div class="centered-text" style="padding: 5em 5em 5em 5em">
+    <n-text depth="3" v-if="data.length > 0">
+      <n-space justify="center">
+        <n-space vertical>
+          <span>
+            Latest <b>Mina</b> stable release:
+            <a :href="data[0].html_url" target="_blank">
+              {{ data[0].tag_name }}
+            </a>
+          </span>
+          <span>
+            Released at:
+            <n-time :time="new Date(data[0].published_at)" format="yyyy-MM-dd" />
+          </span>
+          <span>
+          </span>
+        </n-space>
+      </n-space>
+    </n-text>
+    <br><br>
     <n-space justify="center">
       <n-tag round :bordered="true" :size="'large'" style="padding: 20px; min-height: 130px;">
         <n-space justify="center" vertical>
-          <n-h5 style="font-size: 90%">Source code</n-h5>
+          <n-h5 style="font-size: 90%">Dashboard source code</n-h5>
           <n-space justify="center">
             <n-tooltip trigger="hover">
               <template #trigger>
@@ -40,25 +59,6 @@ onMounted( async () => {
         </n-space>
       </n-tag>
     </n-space>
-    <br><br>
-    <n-text depth="3" v-if="data.length > 0">
-      <n-space justify="center">
-        <n-space vertical>
-          <span>
-            Latest <b>Mina</b> stable release:
-            <a :href="data[0].html_url" target="_blank">
-              {{ data[0].tag_name }}
-            </a>
-          </span>
-          <span>
-            Released at:
-            <n-time :time="new Date(data[0].published_at)" format="yyyy-MM-dd" />
-          </span>
-          <span>
-          </span>
-        </n-space>
-      </n-space>
-    </n-text>
   </div>
 </template>
 
