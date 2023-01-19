@@ -49,7 +49,20 @@ const chartProps = {
   ],
   mainValue: null,
   changeValue: null,
-  description: 'The number of active validators, i.e. validators that produced at least 1 block durirng the last 1000 blocks.'
+  description: `
+  <p>
+    Above all, validators are pieces of hardware that run mina software. The combination of all the validators (also snark workers) form the foundation of mina network.
+  </p>
+  <p>
+    Validators are maintained primarily by mina community and volunteers, who typically dedicate a computer to the process.
+  </p>
+  <p>
+    Similar to stakers (or miners) in other protocols, validators can be selected to produce a block and earn block rewards.
+  </p>
+  <p>
+    The data shows number of active validators, i.e. validators that produced at least 1 block during the last 1000 blocks.
+  </p>
+  `
 }
 
 const loading = ref(false)

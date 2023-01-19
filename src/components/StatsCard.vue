@@ -66,9 +66,10 @@ const emits = defineEmits(['reload'])
             transform-origin: inherit;
             font-size: 70%;
             padding: 2em 2em 2em 2em;
+            text-align: justify;
           "
         >
-          {{ props.data.description }}
+        <div v-html="props.data.description"></div>
         </div>
       </n-tooltip>
       <n-button tertiary circle type="tertiary" size="small" @click="showModal = true" :disabled="loading">
