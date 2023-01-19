@@ -76,6 +76,6 @@ query MyQuery {
 }
 ```
 
-### 5. **Validator IP addresses**
+### 5. **Validator IP addresses (or any other information that let us approximate the location of nodes)**
 
 Does this data exist? Ideas how to get it efficiently? If this is now easily available, I'd like to try setting up some kind of a program and api that creates this data (after the dashboard is finished), but I'm short on good ideas how to get the data.
