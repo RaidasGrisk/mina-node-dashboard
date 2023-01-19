@@ -46,10 +46,9 @@ const emits = defineEmits(['reload'])
     hoverable
   >
     <template #header>
-      <!-- <n-skeleton v-if="props.loading" text height="25px" width="60%" :sharp="false"/>
-      <template v-else> -->
+      <n-collapse-transition :appear="true">
         {{ props.data.chartName }}
-      <!-- </template> -->
+      </n-collapse-transition>
     </template>
 
     <template #header-extra>
@@ -101,7 +100,6 @@ const emits = defineEmits(['reload'])
       </n-space>
     </div>
     <template v-else>
-
       <n-space size="small" v-for="obj in props.data.additionalValues">
         <template v-if="(obj.value !== null) | obj.text">
           <n-text strong>
@@ -112,18 +110,17 @@ const emits = defineEmits(['reload'])
               :precision="obj.precision | 0"
             />
           </n-text>
-          <n-text depth="3">
-            {{ obj.text }}
-          </n-text>
+          <n-collapse-transition :appear="true">
+            <n-text depth="3">
+              {{ obj.text }}
+            </n-text>
+          </n-collapse-transition>
           <br>
         </template>
       </n-space>
 
     <slot></slot>
     </template>
-    <!-- <template #footer>
-      #footer
-    </template> -->
   </n-card>
 
   <template>
