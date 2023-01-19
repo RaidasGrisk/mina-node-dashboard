@@ -67,8 +67,6 @@ query MyQuery {
 
 How to query the ***active*** validators, instead of all? If I understand correctly, there are many addresses that delegate to itself, but are not actually running the validators (and so not producing any blocks). For example, the following query returns a validator that has not produced a block in a very long time. Is there an efficient way to query validators that are actively producing blocks? So in practice the query should return something [similar to this table](https://minascan.io/mainnet/validators/leaderboard?epoch=45&isFullyUnlocked=false&isNotAnonymous=false&isVerifOnly=false&isWithFee=false&orderBy=DESC&page=0&searchStr=&size=100&sortBy=amount_staked&stake=1000&type=active).
 
-Another way to do that, would be to take the addresses of the validators over the last 1000 blocks, and then fetch the balances of these addresses. To get this, it would take only two queries, but the method is questionable (the last 1000 blocks can in theory not include the top active validators..?).
-
 ```
 query MyQuery {
   stakes(limit: 1, sortBy: BALANCE_DESC, query: {epoch: 45}) {
@@ -77,6 +75,8 @@ query MyQuery {
   }
 }
 ```
+
+We could also fetch the addresses of the validators over the last 1000 blocks, and then fetch the balances of these addresses. To get this, it would take only two queries, but the method is questionable (the last 1000 blocks can in theory not include the top active validators..?).
 
 ### 5. **Validator IP addresses (or any other information that let us approximate the location of nodes)**
 
