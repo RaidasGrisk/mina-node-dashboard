@@ -1,6 +1,6 @@
 <script setup>
 import { ref, onMounted } from 'vue'
-import StatsCard from '../components/StatsCard.vue'
+import StatsCard from '../../components/StatsCard.vue'
 import { useThemeVars } from 'naive-ui'
 
 import { BarChart } from 'vue-chart-3';
@@ -42,14 +42,14 @@ const options = {
 }
 
 const chartProps = {
-  chartName: 'Block rewards',
+  chartName: 'Block time',
   additionalValues: [
-    {value: null, text: 'MINA, last block', precision: 0},
-    {value: null, text: 'MINA, on average last 20 blocks', precision: 0}
+    {value: null, text: 'minutes'},
+    {value: null, text: 'avg. over the last 20 blocks', precision: 2}
   ],
-  mainValue: null,
+  mainValue: 0,
   changeValue: null,
-  description: ''
+  description: 'The difference in minutes between two subsequent blocks.'
 }
 
 const loading = ref(false)
@@ -70,10 +70,8 @@ const loadData = async () => {
     body: JSON.stringify({
       query: `
       query MyQuery {
-        blocks(query: {canonical: true}, limit: 50, sortBy: BLOCKHEIGHT_DESC) {
-          transactions {
-            coinbase
-          }
+        blocks(sortBy: DATETIME_DESC, limit: 100, query: {canonical: true}) {
+          dateTime
           blockHeight
         }
       }
@@ -83,24 +81,46 @@ const loadData = async () => {
 
   let response_ = await response.json()
 
+  // helper functions
+  // const filterUnique = (value, index, self) => {
+  //   return self.findIndex(v => v.blockHeight === value.blockHeight) === index
+  // }
+
+  const subtractDates = (prev, curr) => {
+    const prev_ = new Date(prev)
+    const curr_ = new Date(curr)
+    var diff = (curr_.getTime() - prev_.getTime()) / 1000 / 60
+    return Math.abs(diff)
+  }
+
   // reverse
   response_ = response_.data.blocks.reverse()
+
+  // filter out duplicates
+  // response_ = response_.filter(filterUnique)
+
+  // subtract dates to get the difference
+  for (let i = 1; i < response_.length; i++) {
+    response_[i].minutesBetweenBlocks = subtractDates(
+      response_[i].dateTime, response_[i-1].dateTime
+    )
+  }
 
   // set data element values
   data.value = {
     labels: response_.map(i => i.blockHeight),
     datasets: [
       {
-        data: response_.map(i => i.transactions.coinbase / 1000000000),
+        data: response_.map(i => i.minutesBetweenBlocks),
         backgroundColor: [themeVars.value.infoColor],
       },
     ],
   }
 
   // set other values
-  chartProps.additionalValues[0].value = response_.slice(-1)[0].transactions.coinbase / 1000000000
+  chartProps.additionalValues[0].value = response_.slice(-1)[0].minutesBetweenBlocks
   chartProps.additionalValues[1].value = response_.slice(-20).reduce(
-    (total, next) => total + next.transactions.coinbase / 1000000000, 0
+    (total, next) => total + next.minutesBetweenBlocks, 0
   ) / 20
 
   loading.value = false

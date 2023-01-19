@@ -1,16 +1,17 @@
 <script setup>
 import header_ from './components/header_.vue'
-import StatsCard from './components/StatsCard.vue'
-import GeneralStats from './components/GeneralStats.vue'
-import Chart1 from './components/Chart1.vue'
-import Chart2 from './components/Chart2.vue'
-import Chart3 from './components/Chart3.vue'
-import Chart4 from './components/Chart4.vue'
-import Chart5 from './components/Chart5.vue'
-import Chart6 from './components/Chart6.vue'
-import Chart7 from './components/Chart7.vue'
-import Chart8 from './components/Chart8.vue'
 import footer_ from './components/footer_.vue'
+import GeneralStats from './components/GeneralStats.vue'
+
+import BlockTime from './components/charts/BlockTime.vue'
+import ActiveValidators from './components/charts/ActiveValidators.vue'
+import ActiveSnarkWorkers from './components/charts/ActiveSnarkWorkers.vue'
+import LatestBlockCreators from './components/charts/LatestBlockCreators.vue'
+import TopValidatorsByStake from './components/charts/TopValidatorsByStake.vue'
+import BlockRewards from './components/charts/BlockRewards.vue'
+import BlockFees from './components/charts/BlockFees.vue'
+import BlockTransactions from './components/charts/BlockTransactions.vue'
+
 import { ref } from 'vue'
 import { useThemeVars } from 'naive-ui'
 import { Chart, registerables } from "chart.js";
@@ -40,28 +41,28 @@ const reload = () => {
             <div style="padding: 3em 0em 3em 0em;">
               <n-grid :x-gap="12" :y-gap="12" cols="1 s:2 m:3 l:4 xl:4 2xl:4" responsive="screen">
                 <n-grid-item>
-                  <Chart1 />
+                  <ActiveValidators />
                 </n-grid-item>
                 <n-grid-item>
-                  <Chart2 />
+                  <ActiveSnarkWorkers />
                 </n-grid-item>
                 <n-grid-item>
-                  <Chart3 />
+                  <LatestBlockCreators />
                 </n-grid-item>
                 <n-grid-item>
-                  <Chart4 />
+                  <TopValidatorsByStake />
                 </n-grid-item>
                 <n-grid-item>
-                  <Chart5 />
+                  <BlockTime />
                 </n-grid-item>
                 <n-grid-item>
-                  <Chart6 />
+                  <BlockRewards />
                 </n-grid-item>
                 <n-grid-item>
-                  <Chart7 />
+                  <BlockFees />
                 </n-grid-item>
                 <n-grid-item>
-                  <Chart8 />
+                  <BlockTransactions />
                 </n-grid-item>
               </n-grid>
             </div>

@@ -1,6 +1,6 @@
 <script setup>
 import { ref, onMounted } from 'vue'
-import StatsCard from '../components/StatsCard.vue'
+import StatsCard from '../../components/StatsCard.vue'
 import { useThemeVars } from 'naive-ui'
 
 import { BarChart } from 'vue-chart-3';
@@ -42,10 +42,10 @@ const options = {
 }
 
 const chartProps = {
-  chartName: 'Transactions per block',
+  chartName: 'Block rewards',
   additionalValues: [
-    {value: null, text: 'transactions, last block', precision: 0},
-    {value: null, text: '% over the last 100 blocks', precision: 0}
+    {value: null, text: 'MINA, last block', precision: 0},
+    {value: null, text: 'MINA, on average last 20 blocks', precision: 0}
   ],
   mainValue: null,
   changeValue: null,
@@ -70,11 +70,9 @@ const loadData = async () => {
     body: JSON.stringify({
       query: `
       query MyQuery {
-        blocks(limit: 100, query: {canonical: true}, sortBy: BLOCKHEIGHT_DESC) {
+        blocks(query: {canonical: true}, limit: 100, sortBy: BLOCKHEIGHT_DESC) {
           transactions {
-            userCommands {
-              nonce
-            }
+            coinbase
           }
           blockHeight
         }
@@ -93,18 +91,17 @@ const loadData = async () => {
     labels: response_.map(i => i.blockHeight),
     datasets: [
       {
-        data: response_.map(i => i.transactions.userCommands.length),
+        data: response_.map(i => i.transactions.coinbase / 1000000000),
         backgroundColor: [themeVars.value.infoColor],
       },
     ],
   }
 
   // set other values
-  chartProps.additionalValues[0].value = response_.slice(-1)[0].transactions.userCommands.length
-  chartProps.additionalValues[1].value = ((
-    response_.slice(-1)[0].transactions.userCommands.length /
-    response_[0].transactions.userCommands.length
-  ) - 1 ) * 100
+  chartProps.additionalValues[0].value = response_.slice(-1)[0].transactions.coinbase / 1000000000
+  chartProps.additionalValues[1].value = response_.slice(-20).reduce(
+    (total, next) => total + next.transactions.coinbase / 1000000000, 0
+  ) / 20
 
   loading.value = false
 }

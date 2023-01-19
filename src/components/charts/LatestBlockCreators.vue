@@ -1,6 +1,6 @@
 <script setup>
 import { ref, onMounted, computed } from 'vue'
-import StatsCard from '../components/StatsCard.vue'
+import StatsCard from '../../components/StatsCard.vue'
 import { useThemeVars } from 'naive-ui'
 
 const themeVars = useThemeVars()
@@ -9,10 +9,12 @@ const data = ref({})
 const addressMapping = ref({})
 
 // make responsive width
-const cardRef = ref(null)
-const getNumberOfChars = computed(() => {
-  // return cardRef.value ? Math.round(cardRef.value[0].$el.clientWidth / 19) : 12
-})
+// const cardRef = ref(null)
+// const getNumberOfChars = computed(() => {
+//   return cardRef.value ? Math.round(cardRef.value[0].$el.clientWidth / 19) : 12
+//   return cardRef.value ? cardRef.value.$el.clientWidth : null
+//   return cardRef._value ? cardRef._value.clientWidth : cardRef
+// })
 
 const chartProps = {
   chartName: 'Latest block creators',
@@ -115,7 +117,7 @@ onMounted( async () => {
 
 <template>
   <StatsCard :data="chartProps" :loading="loading" @reload="loadData">
-    <n-space v-for="address in data" ref="cardRef">
+    <n-space v-for="address in data">
 
       <n-text code class="codeStyles">
         <n-text depth="2" type="success">

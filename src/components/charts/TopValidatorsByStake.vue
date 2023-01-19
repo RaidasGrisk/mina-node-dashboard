@@ -1,6 +1,6 @@
 <script setup>
 import { ref, onMounted } from 'vue'
-import StatsCard from '../components/StatsCard.vue'
+import StatsCard from '../../components/StatsCard.vue'
 import { useThemeVars } from 'naive-ui'
 
 import { BarChart } from 'vue-chart-3';
@@ -42,10 +42,10 @@ const options = {
 }
 
 const chartProps = {
-  chartName: 'Fees per block',
+  chartName: 'Top validators by stake',
   additionalValues: [
-    {value: null, text: 'MINA, last block', precision: 2},
-    {value: null, text: '% change over the last 20 blocks', precision: 0}
+    {value: null, text: '% of stake held by top 5 validators', precision: 1},
+    {value: null, text: 'Gini coefficient', precision: 2}
   ],
   mainValue: null,
   changeValue: null,
@@ -70,9 +70,9 @@ const loadData = async () => {
     body: JSON.stringify({
       query: `
       query MyQuery {
-        blocks(query: {canonical: true}, limit: 100, sortBy: BLOCKHEIGHT_DESC) {
-          blockHeight
-          txFees
+        stakes(limit: 50, sortBy: BALANCE_DESC, query: {epoch: 45}) {
+          balance
+          public_key
         }
       }
         `
@@ -82,24 +82,47 @@ const loadData = async () => {
   let response_ = await response.json()
 
   // reverse
-  response_ = response_.data.blocks.reverse()
+  response_ = response_.data.stakes
 
   // set data element values
   data.value = {
-    labels: response_.map(i => i.blockHeight),
+    labels: response_.map(i => i.public_key.slice(0, 5) + ' ... ' + i.public_key.slice(-5)),
     datasets: [
       {
-        data: response_.map(i => i.txFees / 1000000000),
+        data: response_.map(i => i.balance),
         backgroundColor: [themeVars.value.infoColor],
       },
     ],
   }
 
-  // set other values
-  chartProps.additionalValues[0].value = response_.slice(-1)[0].txFees / 1000000000
-  chartProps.additionalValues[1].value = ((response_.slice(-1)[0].txFees /
-    response_.slice(-20)[0].txFees) - 1 ) * 100
+  // helpers
+  const sumArray = (x) => {
+    return x.reduce((a, b) => {return a + b})
+  }
 
+
+  const gini = (array) => {
+    // https://github.com/oliviaguest/gini
+    array = array.sort()
+    let index = Array.from(Array(array.length).keys())
+    let n = array.length
+
+    var top = 0
+    for(var i=0; i< array.length; i++) {
+        top += array[i] * (index[i] * 2 - n - 1)
+    }
+
+    var botom = n * sumArray(array)
+
+    return top / botom
+  }
+
+
+  const balances = response_.map(i => i.balance)
+
+  // set other values
+  chartProps.additionalValues[0].value = (sumArray(balances.slice(0, 5)) / 809110096) * 100
+  chartProps.additionalValues[1].value = gini(balances) * 100
 
   loading.value = false
 }
