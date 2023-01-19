@@ -1,25 +1,19 @@
 <script setup>
 import { ref, onMounted, watch } from 'vue'
+import { useStore } from 'vuex'
 import { useThemeVars, useLoadingBar } from 'naive-ui'
 
 const data = ref(null)
 const themeVars = useThemeVars()
 
 const loadingBar = useLoadingBar()
+const store = useStore()
 
 const getData = async () => {
-
   data.value = null // to trigger animation
   loadingBar.start()
-
-  const url = 'https://api.minaexplorer.com/summary'
-  const response = await fetch(url, {
-    method: 'GET',
-  })
-
-  let response_ = await response.json()
-
-  data.value = response_
+  const chainData = await store.dispatch('chainData/getData')
+  data.value = chainData
   loadingBar.finish()
 }
 

@@ -1,5 +1,6 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, watch } from 'vue'
+import { useStore } from 'vuex'
 import StatsCard from '../../components/StatsCard.vue'
 import { useThemeVars } from 'naive-ui'
 
@@ -9,6 +10,7 @@ import { Chart, registerables } from "chart.js";
 Chart.register(...registerables);
 
 const themeVars = useThemeVars()
+const store = useStore()
 
 const data = ref({})
 const options = {
@@ -70,7 +72,7 @@ const loadData = async () => {
     body: JSON.stringify({
       query: `
       query MyQuery {
-        stakes(limit: 50, sortBy: BALANCE_DESC, query: {epoch: 45}) {
+        stakes(limit: 50, sortBy: BALANCE_DESC, query: {epoch: ${store.getters['chainData/getData'].epoch}}) {
           balance
           public_key
         }
@@ -127,8 +129,11 @@ const loadData = async () => {
   loading.value = false
 }
 
-onMounted( async () => {
-  loadData()
+// doing wathc inste4ad of onMounted, because we are relying on
+// another api call in the store that returns epoch number
+// check if epoch has changed, if so, load the data again
+watch(() => store.getters['chainData/getData'], (prev, curr) => {
+  prev.epoch == curr.epoch ? false : loadData()
 })
 
 </script>
