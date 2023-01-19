@@ -4,7 +4,7 @@
 * Active snark workers: -same as validators-
 * Total snark workers: -same as validators-
 * A list of latest block creators and the number of blocks produced by each
-* Top validators by stake (+ think of how to visualize the centralization/decentralization of stakes)
+* Top validators by stake (+ think of how to visualize/measure the centralization/decentralization of stakes)
 * Block time: time in minutes between two blocks
 * Block rewards
 * Fees per block
@@ -52,7 +52,7 @@ query MyQuery {
 
 ### 3. **Number of snark workers**
 
-How to efficiently get the time-series data of the number of snark workers? I thought I could use the same logic as for number of validators, but even with canocinal set to true, there are multiple provers under same block. So single block requires many snarks, right (I guess so, as there are many work ids under each block)?
+I thought I could use the same logic as for number of validators, but even with canocinal set to true, there are multiple provers under same block. So single block requires many snarks, right (I guess so, as there are many work ids under each block)? How to efficiently get the time-series data of the number of snark workers?
 
 ```
 query MyQuery {
@@ -65,7 +65,7 @@ query MyQuery {
 
 ### 4. **Top active validators by stake**
 
-How to query the *active* validators, instead of all? If I understand correctly, there are many addresses that delegate to itself, but are not actually running the validators (and so not producing any blocks). For example, the following query returns a validator that has not produced a block in a very long time. Is there an efficient way to query validators that are actively producing blocks? So in practice the query should return something [similar to this table](https://minascan.io/mainnet/validators/leaderboard?epoch=45&isFullyUnlocked=false&isNotAnonymous=false&isVerifOnly=false&isWithFee=false&orderBy=DESC&page=0&searchStr=&size=100&sortBy=amount_staked&stake=1000&type=active).
+How to query the ***active*** validators, instead of all? If I understand correctly, there are many addresses that delegate to itself, but are not actually running the validators (and so not producing any blocks). For example, the following query returns a validator that has not produced a block in a very long time. Is there an efficient way to query validators that are actively producing blocks? So in practice the query should return something [similar to this table](https://minascan.io/mainnet/validators/leaderboard?epoch=45&isFullyUnlocked=false&isNotAnonymous=false&isVerifOnly=false&isWithFee=false&orderBy=DESC&page=0&searchStr=&size=100&sortBy=amount_staked&stake=1000&type=active).
 
 ```
 query MyQuery {
