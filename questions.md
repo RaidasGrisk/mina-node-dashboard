@@ -11,7 +11,11 @@
 * Transactions per block
 * World map with node locations
 * Active stake
-* TPS / TPD
+
+* Snarks per block
+* Snark fees per block
+* Top snark producers
+* Top block producers
 
 ## Questions
 
