@@ -34,7 +34,7 @@ defineExpose({
 
 <template>
   <n-collapse-transition :appear="true">
-    <div style="text-align: center; padding-bottom: 1.5em;">
+    <div style="text-align: center; padding: 1em 0em 1em 0em;">
       <n-space justify="center" :size="[150, 50]">
 
         <n-statistic label="Epoch" style="min-width: 10em;">
