@@ -75,32 +75,36 @@ const loadData = async () => {
   // start of by mapping address to number of blocks produced
   const address_mapping = {}
 
-  // https://dev.to/viricruz/fetch-with-promise-all-and-async-await-4ioe
-  // modify to count the blocks made this epoch only..?
-  // filter out unique blockheight
-  for (const index in response_) {
-    let response_addr = await fetch(url, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        query: `
-        query MyQuery {
-          blocks(query: {creator_in: "${response_[index].creator}", canonical: true}, limit: 100) {
-            blockHeight
-          }
-        }
-          `
-      }),
-    })
+  // make an array of queries with selected creators
+  let bodies = response_.map(i => JSON.stringify({
+    query: `
+    query MyQuery {
+      blocks(query: {creator_in: "${i.creator}", canonical: true}, limit: 100) {
+        blockHeight
+        creator
+      }
+    }
+  `
+  }))
 
-    // add the result to mapping
-    let response_addr_ = await response_addr.json()
-    address_mapping[response_[index].creator] = response_addr_.data.blocks.length
+  // make an array of fetch requests (but dont dispatch yet_)
+  let requests = bodies.map(body_ => fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: body_,
+  }))
 
+  // dispatch all the requests at once
+  let requests_ = await Promise.all(requests)
+  let requests_data = await Promise.all(requests_.map(res => res.json()))
+
+  // add the result to mapping
+  for (const index in requests_data) {
+    let creator = requests_data[index].data.blocks[0].creator
+    address_mapping[creator] = requests_data[index].data.blocks.length
   }
-
   addressMapping.value = address_mapping
 
   loading.value = false
@@ -116,8 +120,8 @@ onMounted( async () => {
   <StatsCard :data="chartProps" :loading="loading" @reload="loadData">
     <n-collapse-transition :appear="true">
       <div ref="statscard_width_ref" style="width: 100%;" />
-      <n-space v-for="address in data" justify="space-between">
-        <n-space :size="20">
+      <n-row>
+        <n-space v-for="address in data" justify="space-between" style="white-space: nowrap;">
           <n-text code class="codeStyles">
             <n-text depth="2" type="success">
               <a :href="'https://minaexplorer.com/wallet/' + address" target="_blank">
@@ -126,16 +130,16 @@ onMounted( async () => {
             </n-text>
           </n-text>
           <n-divider vertical style="height: 12px;"/>
+          <n-tooltip trigger="hover" placement="right" style="font-size: 70%;">
+            <template #trigger>
+              <n-text depth="3" style="font-size: 0.90em">
+                {{ addressMapping[address] == 100 ? addressMapping[address].toString() + '+' : addressMapping[address] }}
+              </n-text>
+            </template>
+            Total blocks created
+          </n-tooltip>
         </n-space>
-        <n-tooltip trigger="hover" placement="right" style="font-size: 70%;">
-          <template #trigger>
-            <n-text depth="3" style="margin-top: 30px; font-size: 0.90em">
-              {{ addressMapping[address] == 100 ? addressMapping[address].toString() + '+' : addressMapping[address] }}
-            </n-text>
-          </template>
-          Total blocks created
-        </n-tooltip>
-      </n-space>
+      </n-row>
     </n-collapse-transition>
   </StatsCard>
 </template>
