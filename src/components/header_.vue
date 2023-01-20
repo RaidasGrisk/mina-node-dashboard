@@ -10,7 +10,7 @@ const selectedNetwork = 'Mainnet'
 
 <template>
   <n-layout-header bordered>
-    <n-page-header subtitle="">
+    <n-page-header style="padding: 1em 3em 1em 3em; max-width: 132vh; margin: 0 auto;">
       <template #title>
         <a href="/" style="text-decoration: none; color: inherit">
           <b>MINA protocol</b> <n-text depth="3"><br> Node dashboard</n-text>
