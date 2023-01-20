@@ -12,8 +12,10 @@ import TopValidatorsByStake from './components/charts/TopValidatorsByStake.vue'
 import BlockRewards from './components/charts/BlockRewards.vue'
 import BlockFees from './components/charts/BlockFees.vue'
 import BlockTransactions from './components/charts/BlockTransactions.vue'
+import BlockSnarks from './components/charts/BlockSnarks.vue'
 
 import { ref } from 'vue'
+import { darkTheme, lightTheme } from 'naive-ui'
 import { Chart, registerables } from "chart.js";
 
 Chart.register(...registerables);
@@ -33,7 +35,7 @@ const charts = [
   BlockRewards,
   BlockFees,
   BlockTransactions,
-  StatsCard,
+  BlockSnarks,
   StatsCard,
   StatsCard,
   StatsCard,
@@ -46,13 +48,12 @@ const reload = () => {
 </script>
 
 <template>
-  <n-config-provider>
+  <n-config-provider :theme="lightTheme">
     <n-notification-provider>
       <n-loading-bar-provider>
-
-        <n-layout content-style="max-width: 132vh; margin: 0 auto; padding: 2em;">
+        <n-layout>
           <header_ @logoClick="reload" />
-          <n-layout-content content-style="padding: 3em 0em 3em 0em;">
+          <n-layout-content content-style="max-width: 132vh; margin: 0 auto; padding: 2em;">
             <GeneralStats ref="generalStatsRef"/>
             <div style="padding: 3em 0em 3em 0em;">
               <n-grid :x-gap="12" :y-gap="12" cols="1 s:2 m:3 l:4 xl:4 2xl:4" responsive="screen">
@@ -66,7 +67,6 @@ const reload = () => {
         <n-layout-footer bordered>
           <footer_ />
         </n-layout-footer>
-
       </n-loading-bar-provider>
     </n-notification-provider>
   </n-config-provider>
