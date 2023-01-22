@@ -19,11 +19,6 @@ const getData = async () => {
 
 onMounted(() => {
   getData()
-
-  // loading bar config
-  loadingBar.loadingBarRef.value.cssVars['--n-height'] = "10px"
-  loadingBar.loadingBarRef.value.cssVars['--n-color-loading'] = themeVars.value.infoColor
-
 })
 
 defineExpose({
