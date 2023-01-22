@@ -15,13 +15,14 @@ import BlockTransactions from './components/charts/BlockTransactions.vue'
 import BlockSnarks from './components/charts/BlockSnarks.vue'
 
 import { ref } from 'vue'
-import { darkTheme, lightTheme } from 'naive-ui'
+import { useStore } from 'vuex'
 import { Chart, registerables } from "chart.js";
 
 Chart.register(...registerables);
 Chart.defaults.font.size = 10
 Chart.defaults.font.family = '"Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif'
 
+const store = useStore()
 const generalStatsRef = ref()
 
 // put charts into an array, then render in a v-for loop
@@ -48,7 +49,7 @@ const reload = () => {
 </script>
 
 <template>
-  <n-config-provider :theme="lightTheme">
+  <n-config-provider :theme="store.getters['theme/getTheme']" :theme-overrides="store.getters['theme/getThemeOverrides']">
     <n-notification-provider>
       <n-loading-bar-provider>
         <n-layout>
