@@ -51,7 +51,7 @@ const chartProps = {
   changeValue: null,
   description: `
   <p>
-    Above all, validators are pieces of hardware that run mina software. The combination of all the validators (also snark workers) form the foundation of mina network.
+    Above all, validators are pieces of hardware that run mina software. The combination of all the validators and SNARK workers form the foundation of mina network.
   </p>
   <p>
     Validators are maintained primarily by mina community and volunteers, who typically dedicate a computer to the process.

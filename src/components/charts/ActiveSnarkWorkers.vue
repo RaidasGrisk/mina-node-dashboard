@@ -49,7 +49,30 @@ const chartProps = {
   ],
   mainValue: null,
   changeValue: null,
-  description: 'The number of snark workers, i.e. workers that proved at least 1 block durirng the last 1000 blocks.'
+  description: `
+  <p>
+    SNARKs (Succinct Non-Interactive Argument of Knowledge) are what allows mina blockchain size to remain fixed size and small (about 22kb).
+  </p>
+  <p>
+    Mina blockchain functions with two main roles on the network:
+    <p>
+      1. Block producers are those who produce blocks in the network;
+    </p>
+    <p>
+      2. SNARK workers create zk-SNARK proofs of transactions to compress the transactions so they can be folded into the tiny blockchain proof.
+    </p>
+  </p>
+  <p>
+    Before adding a new block, block producers must purchase a SNARK from SNARK workers that contains proofs of new transactions. Only after doing that
+    can a block producer produce a new block.
+  </p>
+  <p>
+    SNARK workers are incentivized through a reward mechanism in MINA. They are rewarded with MINA tokens for the computation they perform, and this incentivizes more nodes to join the network and act as SNARK workers.
+  </p>
+  <p>
+    The data shows number of active SNARK workers, i.e. workers that produced at least 1 SNARK during the last 1000 blocks.
+  </p>
+  `,
 }
 
 const loading = ref(false)
