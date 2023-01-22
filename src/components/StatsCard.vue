@@ -124,22 +124,49 @@ const emits = defineEmits(['reload'])
     </template>
   </n-card>
 
+  <!-- Below is the modal
+  Same as the card itself, but slightly diffrerent layout. -->
   <template>
     <n-modal v-model:show="showModal">
       <n-card
         style="width: 600px"
-        title="Modal"
-        :bordered="false"
+        :bordered="true"
         size="huge"
-        role="dialog"
-        aria-modal="true"
+        :segmented="{
+          content: true,
+          footer: 'soft'
+        }"
       >
-        <template #header-extra>
-          Oops!
+      <template #header>
+        {{ props.data.chartName }}
+      </template>
+        <template #default>
+          <!-- this is just copy pasted from above.
+          Not very good architecture but oh well :// -->
+          <n-space size="small" v-for="obj in props.data.additionalValues">
+            <template v-if="(obj.value !== null) | obj.text">
+              <n-text strong>
+                <n-number-animation
+                  :from="0"
+                  :to="obj.value"
+                  :active="true"
+                  :precision="obj.precision | 0"
+                />
+              </n-text>
+              <n-collapse-transition :appear="true">
+                <n-text depth="3">
+                  {{ obj.text }}
+                </n-text>
+              </n-collapse-transition>
+              <br>
+            </template>
+          </n-space>
+          <slot></slot>
         </template>
-        Content
         <template #footer>
-          Footer
+          <n-text depth="3" style="font-size: 80%">
+            <div v-html="props.data.description" style="text-align: justify; text-justify: inter-word;"></div>
+          </n-text>
         </template>
       </n-card>
     </n-modal>
