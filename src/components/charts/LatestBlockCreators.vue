@@ -110,6 +110,17 @@ const loadData = async () => {
   loading.value = false
 }
 
+const addressCharCrop = () => {
+
+  // if modal is brought up, this width becomes 0,
+  // this messes up the rendering, hence this exception
+  if (width.value == 0) {
+    return 12
+  }
+  return Math.round(width.value / 20)
+
+}
+
 onMounted( async () => {
   loadData()
 })
@@ -125,7 +136,7 @@ onMounted( async () => {
           <n-text code class="codeStyles">
             <n-text depth="2" type="success">
               <a :href="'https://minaexplorer.com/wallet/' + address" target="_blank">
-                {{ address.slice(0, Math.round(width / 20)) + '...' + address.slice(-Math.round(width / 20)) }}
+                {{ address.slice(0, addressCharCrop()) + '...' + address.slice(-addressCharCrop()) }}
               </a>
             </n-text>
           </n-text>
