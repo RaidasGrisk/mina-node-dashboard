@@ -5,6 +5,8 @@ const state = () => ({
   themeIsLight: JSON.parse(localStorage.getItem('themeIsLight')),
   lightTheme: lightTheme,
   darkTheme: darkTheme,
+
+  // overrides for both light and dark
   themeOverrides: {
     LoadingBar: {
       colorLoading: '#2081f0', // cant get ThemeVars to work here, so hardcoding
@@ -12,7 +14,24 @@ const state = () => ({
     },
     common: {
       infoColor: '#2080f0' // keep same for light and dark
+    },
+  },
+
+  // separate overrides for dark / light only
+  themeOverridesDarkOnly: {
+    Layout: {
+      headerColor: '#161b22',
+      color: '#0d1117',
+      footerColor: '#161b22'
+    },
+    Card: {
+      color: '#161b22'
+    },
+    Modal: {
+      color: '#161b22' // here's a bug in naive-ui. This does not work.
     }
+  },
+  themeOverridesLightOnly: {
   }
 })
 
@@ -21,7 +40,12 @@ const getters = {
     return state.themeIsLight ? state.lightTheme : state.darkTheme
   },
   getThemeOverrides(state) {
-    return state.themeOverrides
+    // merge the both / light / dark overrides as needed
+    if (state.themeIsLight) {
+      return {...state.themeOverrides, ...state.themeOverridesLightOnly}
+    } else {
+      return {...state.themeOverrides, ...state.themeOverridesDarkOnly}
+    }
   },
   themeIsLight(state) {
     return state.themeIsLight
