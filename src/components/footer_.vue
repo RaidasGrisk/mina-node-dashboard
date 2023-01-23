@@ -61,8 +61,9 @@ onMounted( async () => {
     </n-space>
     <br><br>
     <n-text depth="3">
-      Data source: <br>
-      <a href="https://graphql.minaexplorer.com/" target="_blank">mina explorer graph QL</a>
+      Data sources, Mina explorer: <br>
+      <a href="https://graphql.minaexplorer.com/" target="_blank">Graph QL</a> <br>
+      <a href="https://docs.minaexplorer.com/rest-api/" target="_blank">REST API</a>
     </n-text>
   </div>
 </template>
