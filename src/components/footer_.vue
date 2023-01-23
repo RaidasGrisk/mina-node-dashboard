@@ -59,6 +59,11 @@ onMounted( async () => {
         </n-space>
       </n-tag>
     </n-space>
+    <br><br>
+    <n-text depth="3">
+      Data source: <br>
+      <a href="https://graphql.minaexplorer.com/" target="_blank">mina explorer graph QL</a>
+    </n-text>
   </div>
 </template>
 
