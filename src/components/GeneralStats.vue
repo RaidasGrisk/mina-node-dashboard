@@ -48,6 +48,7 @@ defineExpose({
                   <div class="tooltip">
                     <p>
                       An epoch is a unit of time equal to 7140 slots. An epoch is divided into slots of 3 minutes each.
+                      Epoch duration is 14 days and 21 hours.
                     </p>
                     <p>
                       An epoch is used to mark changes in the set of validators to quantify important events in the network.

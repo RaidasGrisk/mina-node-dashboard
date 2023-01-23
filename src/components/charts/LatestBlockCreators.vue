@@ -14,14 +14,25 @@ const statscard_width_ref = ref(null)
 const { width, height } = useElementSize(statscard_width_ref)
 
 const chartProps = {
-  chartName: 'Latest block creators‍',
+  chartName: 'Latest block creators‍ 📦',
   additionalValues: [
     {value: null, text: null},
     {value: null, text: null, precision: 0}
   ],
   mainValue: null,
   changeValue: null,
-  description: 'Public keys of the latest block creators.'
+  description: `
+  <p>
+    Public keys of the latest block creators. In other words, this is a list of addresses of validators that created the most recent blocks.
+  </p>
+  <p>
+    On the right side, there a number showing how many blocks have this address created in total. So if the number is small, this is a new validator.
+    Big number indicate that the validator has been actively producing blocks for a long time.
+  </p>
+  <p>
+    By clicking on an address, you can visit MINA's block explorer and explore the account further.
+  </p>
+  `
 }
 
 const loading = ref(false)

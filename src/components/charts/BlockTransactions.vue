@@ -42,7 +42,7 @@ const options = {
 }
 
 const chartProps = {
-  chartName: 'Transactions per block',
+  chartName: 'Transactions per block 🔃',
   additionalValues: [
     {value: null, text: 'transactions, last block', precision: 0},
     {value: null, text: '% over the last 100 blocks', precision: 0}

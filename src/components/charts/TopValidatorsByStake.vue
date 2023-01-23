@@ -44,14 +44,21 @@ const options = {
 }
 
 const chartProps = {
-  chartName: 'Top validators by stake',
+  chartName: 'Top validators by stake 🪧',
   additionalValues: [
     {value: null, text: '% of stake held by top 5 validators', precision: 1},
     {value: null, text: 'Gini coefficient', precision: 2}
   ],
   mainValue: null,
   changeValue: null,
-  description: ''
+  description: `
+  <p>
+    These are the addresses of active validators sorted by their stake in MINA.
+  </p>
+  <p>
+    This signifies how distributed or concentrated the validator power is.
+  </p>
+  `
 }
 
 const loading = ref(false)

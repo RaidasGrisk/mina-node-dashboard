@@ -42,7 +42,7 @@ const options = {
 }
 
 const chartProps = {
-  chartName: 'Active snark workers 🧑‍🔬',
+  chartName: 'Active snark workers ‍🛠️',
   additionalValues: [
     {value: null, text: 'workers'},
     {value: null, text: 'new workers in the last 50 blocks', precision: 0}

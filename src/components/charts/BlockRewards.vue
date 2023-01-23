@@ -42,14 +42,22 @@ const options = {
 }
 
 const chartProps = {
-  chartName: 'Block rewards',
+  chartName: 'Block rewards 🔖',
   additionalValues: [
     {value: null, text: 'MINA, last block', precision: 0},
     {value: null, text: 'MINA, on average last 20 blocks', precision: 0}
   ],
   mainValue: null,
   changeValue: null,
-  description: ''
+  description: `
+    <p>
+      Block reward is reward given to the validator that produced a block.
+    </p>
+    <p>
+      The reward for producing a block is 720 MINA tokens. Supercharged rewards are 1440 Mina tokens
+      (will likely be removed as per <a href="https://github.com/MinaProtocol/MIPs/blob/main/MIPS/mip-remove-supercharged-rewards.md" target="_blank">MIP<a/>).
+    </p>
+  `
 }
 
 const loading = ref(false)
