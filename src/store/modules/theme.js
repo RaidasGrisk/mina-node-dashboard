@@ -1,5 +1,6 @@
 import { darkTheme, lightTheme } from 'naive-ui'
 import { useThemeVars } from 'naive-ui'
+import { merge } from '../../utils'
 
 const state = () => ({
   themeIsLight: JSON.parse(localStorage.getItem('themeIsLight')),
@@ -27,9 +28,14 @@ const state = () => ({
     Card: {
       color: '#161b22'
     },
+    // here's a bug in naive-ui. This does not work.
+    // instead use common.modalColor
     Modal: {
-      color: '#161b22' // here's a bug in naive-ui. This does not work.
-    }
+      color: '#161b22'
+    },
+    common: {
+      modalColor: '#161b22'
+    },
   },
   themeOverridesLightOnly: {
   }
@@ -41,10 +47,11 @@ const getters = {
   },
   getThemeOverrides(state) {
     // merge the both / light / dark overrides as needed
+    // cant use {..obj, ..obj} for deep objects, to merge nested use custom fn
     if (state.themeIsLight) {
-      return {...state.themeOverrides, ...state.themeOverridesLightOnly}
+      return merge(state.themeOverrides, state.themeOverridesLightOnly)
     } else {
-      return {...state.themeOverrides, ...state.themeOverridesDarkOnly}
+      return merge(state.themeOverrides, state.themeOverridesDarkOnly)
     }
   },
   themeIsLight(state) {
