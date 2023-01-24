@@ -55,10 +55,10 @@ const chartProps = {
   </p>
   <p>
     Mina blockchain functions with two main roles on the network:
-    <p>
+    <p style="margin-left: 15px">
       1. Block producers are those who produce blocks in the network;
     </p>
-    <p>
+    <p style="margin-left: 15px">
       2. SNARK workers create zk-SNARK proofs of transactions to compress the transactions so they can be folded into the tiny blockchain proof.
     </p>
   </p>
