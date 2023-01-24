@@ -3,7 +3,7 @@ import { ref, onMounted } from 'vue'
 import StatsCard from '../../components/StatsCard.vue'
 import { useThemeVars } from 'naive-ui'
 
-import { LineChart } from 'vue-chart-3';
+import { BarChart } from 'vue-chart-3';
 import { Chart, registerables } from "chart.js";
 
 Chart.register(...registerables);
@@ -117,7 +117,7 @@ onMounted( async () => {
 
 <template>
   <StatsCard :data="chartProps" :loading="loading" @reload="loadData">
-    <LineChart :chartData="data" :width="150" :height="100" :options="options" />
+    <BarChart :chartData="data" :width="150" :height="100" :options="options" />
   </StatsCard>
 </template>
 
