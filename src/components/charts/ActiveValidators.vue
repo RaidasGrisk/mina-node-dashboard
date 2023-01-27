@@ -50,16 +50,16 @@ const options = {
 }
 
 const chartProps = {
-  chartName: 'Active validators 👷',
+  chartName: 'Active validators 🦸',
   additionalValues: [
     {value: null, text: 'validators'},
-    {value: null, text: 'new validators in the last 50 blocks', precision: 0}
+    {value: null, text: 'new validators in the last 100 blocks', precision: 0}
   ],
   mainValue: null,
   changeValue: null,
   description: `
   <p>
-    Above all, validators are pieces of hardware that run mina software. The combination of all the validators and SNARK workers form the foundation of mina network.
+    Above all, validators are pieces of hardware that run MINA software. The combination of all the validators and SNARK workers form the foundation of mina network.
   </p>
   <p>
     Validators are maintained primarily by mina community and volunteers, who typically dedicate a computer to the process.
@@ -91,7 +91,7 @@ const loadData = async () => {
     body: JSON.stringify({
       query: `
       query MyQuery {
-        blocks(sortBy: DATETIME_DESC, limit: 1000, query: {canonical: true}) {
+        blocks(sortBy: DATETIME_DESC, limit: 5000, query: {canonical: true}) {
           creator
           blockHeight
         }
@@ -125,7 +125,7 @@ const loadData = async () => {
     }
   }
 
-  response_ = response_.slice(-100)
+  response_ = response_.slice(-1000)
 
   // set data element values
   data.value = {
@@ -140,7 +140,7 @@ const loadData = async () => {
 
   // set other values
   chartProps.additionalValues[0].value = response_.slice(-1)[0].uniqueAddresses
-  chartProps.additionalValues[1].value = response_.slice(-1)[0].uniqueAddresses - response_.slice(-50)[0].uniqueAddresses
+  chartProps.additionalValues[1].value = response_.slice(-1)[0].uniqueAddresses - response_.slice(-100)[0].uniqueAddresses
 
   loading.value = false
 }

@@ -17,11 +17,16 @@ const options = {
   },
   scales: {
     x: {
-      display: false,
-      border: {
+      ticks: {
         display: false
       },
+      title: {
+        display: true,
+        text: 'block',
+      },
+      display: true,
       grid: {
+        drawBorder: false,
         display: false,
         drawOnChartArea: false,
         drawTicks: false,
@@ -45,7 +50,7 @@ const chartProps = {
   chartName: 'Active snark workers ‍🛠️',
   additionalValues: [
     {value: null, text: 'workers'},
-    {value: null, text: 'new workers in the last 50 blocks', precision: 0}
+    {value: null, text: 'new workers in the last 100 blocks', precision: 0}
   ],
   mainValue: null,
   changeValue: null,
@@ -70,7 +75,7 @@ const chartProps = {
     SNARK workers are incentivized through a reward mechanism in MINA. They are rewarded with MINA tokens for the computation they perform, and this incentivizes more nodes to join the network and act as SNARK workers.
   </p>
   <p>
-    The data shows number of active SNARK workers, i.e. workers that produced at least 1 SNARK during the last 1000 blocks.
+    The data shows number of active SNARK workers, i.e. workers that produced at least 1 SNARK during the last 2500 blocks.
   </p>
   `,
 }
@@ -95,7 +100,7 @@ const loadData = async () => {
   let response_ = await response.json()
   console.log(response_)
 
-  response_ = response_.slice(-100)
+  response_ = response_.slice(-1000)
 
   // set data element values
   data.value = {
@@ -110,7 +115,7 @@ const loadData = async () => {
 
   // set other values
   chartProps.additionalValues[0].value = response_.slice(-1)[0].snark_workers
-  chartProps.additionalValues[1].value = response_.slice(-1)[0].snark_workers - response_.slice(-50)[0].snark_workers
+  chartProps.additionalValues[1].value = response_.slice(-1)[0].snark_workers - response_.slice(-100)[0].snark_workers
 
   loading.value = false
 }
@@ -123,7 +128,7 @@ onMounted( async () => {
 
 <template>
   <StatsCard :data="chartProps" :loading="loading" @reload="loadData">
-    <LineChart :chartData="data" :width="150" :height="100" :options="options" />
+    <LineChart :chartData="data" :width="150" :height="120" :options="options" />
   </StatsCard>
 </template>
 

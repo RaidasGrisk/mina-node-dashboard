@@ -77,7 +77,7 @@ const loadData = async () => {
   response_ = response_.filter(filterUnique)
 
   // trim
-  response_ = response_.slice(0, 6)
+  response_ = response_.slice(0, 7)
 
   // set data element values
   data.value = response_.map(i => i.creator)

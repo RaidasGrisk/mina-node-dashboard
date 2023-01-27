@@ -42,7 +42,7 @@ const options = {
 }
 
 const chartProps = {
-  chartName: 'Snarks per block',
+  chartName: 'Snarks per block 🦺',
   additionalValues: [
     {value: null, text: 'snarks'},
     {value: null, text: 'avg. over the last 100 blocks', precision: 0}
