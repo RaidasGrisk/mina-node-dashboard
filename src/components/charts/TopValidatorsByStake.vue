@@ -19,7 +19,14 @@ const options = {
   },
   scales: {
     x: {
-      display: false,
+      ticks: {
+        display: false
+      },
+      title: {
+        display: true,
+        text: 'validator address',
+      },
+      display: true,
       border: {
         display: false
       },

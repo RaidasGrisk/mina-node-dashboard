@@ -6,6 +6,7 @@ import StatsCard from './components/StatsCard.vue'
 
 import BlockTime from './components/charts/BlockTime.vue'
 import ActiveValidators from './components/charts/ActiveValidators.vue'
+import TotalValidators from './components/charts/TotalValidators.vue'
 import ActiveSnarkWorkers from './components/charts/ActiveSnarkWorkers.vue'
 import LatestBlockCreators from './components/charts/LatestBlockCreators.vue'
 import TopValidatorsByStake from './components/charts/TopValidatorsByStake.vue'
@@ -28,6 +29,7 @@ const generalStatsRef = ref()
 // put charts into an array, then render in a v-for loop
 // render as per the order in the list
 const charts = [
+  TotalValidators,
   ActiveValidators,
   ActiveSnarkWorkers,
   LatestBlockCreators,

@@ -82,66 +82,35 @@ const loadData = async () => {
   loading.value = true
 
   // config
-  const url = 'https://graphql.minaexplorer.com/'
+  const url = 'https://node-dashboard-bigquery-backend-2qz4wkdima-uc.a.run.app/active_snark_workers'
 
   // API request
   const response = await fetch(url, {
-    method: 'POST',
+    method: 'GET',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({
-      query: `
-      query MyQuery {
-        snarks(sortBy: DATETIME_DESC, limit: 1000, query: {canonical: true}) {
-          prover
-          blockHeight
-        }
-      }
-        `
-    }),
   })
 
   let response_ = await response.json()
-
-  // reverse
-  response_ = response_.data.snarks.reverse()
-
-  // subtract dates to get the difference
-  const uniqueAddresses = new Set()
-  for (let i = 1; i < response_.length; i++) {
-
-    if (uniqueAddresses.has(response_[i].prover)) {
-      response_[i].uniqueAddresses = response_[i-1].uniqueAddresses | 0
-    } else {
-      uniqueAddresses.add(response_[i].prover)
-      response_[i].uniqueAddresses = response_[i-1].uniqueAddresses + 1
-    }
-  }
-
-  // helper functions
-  // const filterUnique = (value, index, self) => {
-  //   return self.findIndex(v => v.blockHeight === value.blockHeight) === index
-  // }
-
-  // response_ = response_.filter(filterUnique)
+  console.log(response_)
 
   response_ = response_.slice(-100)
 
   // set data element values
   data.value = {
-    labels: response_.map(i => i.blockHeight),
+    labels: response_.map(i => i.blockheight),
     datasets: [
       {
-        data: response_.map(i => i.uniqueAddresses),
+        data: response_.map(i => i.snark_workers),
         backgroundColor: [themeVars.value.infoColor],
       },
     ],
   }
 
   // set other values
-  chartProps.additionalValues[0].value = response_.slice(-1)[0].uniqueAddresses
-  chartProps.additionalValues[1].value = response_.slice(-1)[0].uniqueAddresses - response_.slice(-50)[0].uniqueAddresses
+  chartProps.additionalValues[0].value = response_.slice(-1)[0].snark_workers
+  chartProps.additionalValues[1].value = response_.slice(-1)[0].snark_workers - response_.slice(-50)[0].snark_workers
 
   loading.value = false
 }
