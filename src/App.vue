@@ -14,6 +14,7 @@ import BlockRewards from './components/charts/BlockRewards.vue'
 import BlockFees from './components/charts/BlockFees.vue'
 import BlockTransactions from './components/charts/BlockTransactions.vue'
 import BlockSnarks from './components/charts/BlockSnarks.vue'
+import LatestSnarkCreators from './components/charts/LatestSnarkCreators.vue'
 
 import { ref } from 'vue'
 import { useStore } from 'vuex'
@@ -31,8 +32,9 @@ const generalStatsRef = ref()
 const charts = [
   TotalValidators,
   ActiveValidators,
-  ActiveSnarkWorkers,
   LatestBlockCreators,
+  ActiveSnarkWorkers,
+  LatestSnarkCreators,
   TopValidatorsByStake,
   BlockTime,
   BlockRewards,
