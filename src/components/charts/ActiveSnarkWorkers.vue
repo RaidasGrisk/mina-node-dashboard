@@ -98,7 +98,6 @@ const loadData = async () => {
   })
 
   let response_ = await response.json()
-  console.log(response_)
 
   response_ = response_.slice(-1000)
 

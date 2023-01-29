@@ -56,7 +56,6 @@ const loadData = async () => {
         blocks(limit: 30, sortBy: BLOCKHEIGHT_DESC, query: {canonical: true}) {
           creator
           blockHeight
-          stateHash
         }
       }
         `
