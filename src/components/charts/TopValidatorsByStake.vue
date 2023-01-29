@@ -1,8 +1,9 @@
 <script setup>
-import { ref, watch } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useStore } from 'vuex'
 import StatsCard from '../../components/StatsCard.vue'
 import { useThemeVars } from 'naive-ui'
+import { storeReady } from '../../utils'
 
 import { BarChart } from 'vue-chart-3';
 import { Chart, registerables } from "chart.js";
@@ -53,8 +54,8 @@ const options = {
 const chartProps = {
   chartName: 'Top validators by stake 🪧',
   additionalValues: [
-    {value: null, text: '% of stake held by top 5 validators', precision: 1},
-    {value: null, text: 'Gini coefficient', precision: 2}
+    {value: null, text: '% of stake held by top 20 validators', precision: 1},
+    {value: null, text: '', precision: 2}
   ],
   mainValue: null,
   changeValue: null,
@@ -137,8 +138,8 @@ const loadData = async () => {
   const balances = response_.map(i => i.balance)
 
   // set other values
-  chartProps.additionalValues[0].value = (sumArray(balances.slice(0, 5)) / 809110096) * 100
-  chartProps.additionalValues[1].value = gini(balances) * 100
+  chartProps.additionalValues[0].value = (sumArray(balances.slice(0, 20)) / 809110096) * 100
+  // chartProps.additionalValues[1].value = gini(balances) * 100
 
   loading.value = false
 }
@@ -146,15 +147,21 @@ const loadData = async () => {
 // doing wathc inste4ad of onMounted, because we are relying on
 // another api call in the store that returns epoch number
 // check if epoch has changed, if so, load the data again
-watch(() => store.getters['chainData/getData'], (prev, curr) => {
-  prev.epoch == curr.epoch ? false : loadData()
+
+onMounted( async () => {
+
+  // before triggering the loadData, we've to wait for the store
+  // to finish fetching the data, as we rely on it.
+  await storeReady()
+  loadData()
+
 })
 
 </script>
 
 <template>
   <StatsCard :data="chartProps" :loading="loading" @reload="loadData">
-    <BarChart :chartData="data" :width="150" :height="100" :options="options" />
+    <BarChart :chartData="data" :width="150" :height="128" :options="options" />
   </StatsCard>
 </template>
 
