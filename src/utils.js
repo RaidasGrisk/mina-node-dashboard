@@ -1,6 +1,8 @@
 import { toRef, inject, provide, reactive, watchEffect } from 'vue'
 import { useBreakpoint, useMemo } from 'vooks'
 
+import { useStore } from 'vuex'
+
 export function useIsMobile () {
   const breakpointRef = useBreakpoint()
   return useMemo(() => {
@@ -27,4 +29,19 @@ export const merge = (object1, object2) => {
       return acc
     }, { ...object1 })
   }
+}
+
+// sometimes before loading the chart data we want to make sure
+// the store has finished fetching data. Can't think of a way
+// to make this coincise. Not very readable but does the job.
+export const storeReady = async () => {
+  const store = useStore()
+  const delay = ms => new Promise(resolve => setTimeout(resolve, ms))
+  let ready = false
+  while(!ready) {
+    let data = store.getters['chainData/getData']
+    ready = Object.keys(data).length === 0 ? false : true
+    await delay(500)
+  }
+  return true
 }
