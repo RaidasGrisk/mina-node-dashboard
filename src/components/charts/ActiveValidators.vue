@@ -1,7 +1,9 @@
 <script setup>
 import { ref, onMounted } from 'vue'
+import { useStore } from 'vuex'
 import StatsCard from '../../components/StatsCard.vue'
 import { useThemeVars } from 'naive-ui'
+import { storeReady } from '../../utils'
 
 import { LineChart } from 'vue-chart-3';
 import { Chart, registerables } from "chart.js";
@@ -9,6 +11,7 @@ import { Chart, registerables } from "chart.js";
 Chart.register(...registerables);
 
 const themeVars = useThemeVars()
+const store = useStore()
 
 const data = ref({})
 const options = {
@@ -82,36 +85,52 @@ const loadData = async () => {
   // config
   const url = 'https://graphql.minaexplorer.com/'
 
-  // API request
-  const response = await fetch(url, {
+  // lets dispatch X requests instead of one big request
+  const totalBlocks = 5000
+  const blockChunks = 2500
+  const chainData = store.getters['chainData/getData']
+  const lastBlock = chainData.blockchainLength
+  const steps = Math.ceil(totalBlocks / blockChunks)
+
+  const params = [...Array(steps).keys()].map(
+    (step, i) => { return {
+      startBlock: lastBlock - (step + 1) * blockChunks,
+      endBlock: lastBlock - step * blockChunks,
+      limit: blockChunks // needed because default limit is 100
+      }
+    }
+  )
+
+  // make an array of queries with selected creators
+  let queries = params.map(param => JSON.stringify({
+    query: `
+    query MyQuery {
+      blocks(
+        sortBy: BLOCKHEIGHT_DESC,
+        query: {canonical: true, blockHeight_gte: ${param.startBlock}, blockHeight_lt: ${param.endBlock}},
+        limit: ${param.limit}
+      ) {
+        creator
+        blockHeight
+      }
+    }
+  `
+  }))
+
+  // make an array of fetch requests (but dont dispatch yet_)
+  let requests = queries.map(query => fetch(url, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({
-      query: `
-      query MyQuery {
-        blocks(sortBy: DATETIME_DESC, limit: 5000, query: {canonical: true}) {
-          creator
-          blockHeight
-        }
-      }
-        `
-    }),
-  })
+    body: query,
+  }))
 
-  let response_ = await response.json()
-
-  // helper functions
-  const filterUnique = (value, index, self) => {
-    return self.findIndex(v => v.blockHeight === value.blockHeight) === index
-  }
-
-  // reverse
-  response_ = response_.data.blocks.reverse()
-
-  // filter out duplicates
-  response_ = response_.filter(filterUnique)
+  // dispatch all the requests at once
+  let responses = await Promise.all(requests)
+  let responses_ = await Promise.all(responses.map(res => res.json()))
+  let response_ = responses_.map(response => response.data.blocks)
+  response_ = response_.flat(1)
 
   // subtract dates to get the difference
   const uniqueAddresses = new Set()
@@ -146,7 +165,12 @@ const loadData = async () => {
 }
 
 onMounted( async () => {
+
+  // before triggering the loadData, we've to wait for the store
+  // to finish fetching the data, as we rely on it.
+  await storeReady()
   loadData()
+
 })
 
 </script>
