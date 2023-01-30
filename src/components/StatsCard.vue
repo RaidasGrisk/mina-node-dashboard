@@ -97,7 +97,7 @@ const emits = defineEmits(['reload'])
           <n-skeleton height="15px" width="50px" :sharp="false" />
           <n-skeleton height="15px" width="100px" :sharp="false" />
         </n-space>
-        <n-skeleton height="90px" width="100%" :sharp="false" />
+        <n-skeleton height="114px" width="100%" :sharp="false" />
       </n-space>
     </div>
     <template v-else>
