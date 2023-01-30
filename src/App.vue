@@ -9,12 +9,13 @@ import ActiveValidators from './components/charts/ActiveValidators.vue'
 import TotalValidators from './components/charts/TotalValidators.vue'
 import ActiveSnarkWorkers from './components/charts/ActiveSnarkWorkers.vue'
 import LatestBlockCreators from './components/charts/LatestBlockCreators.vue'
-import TopValidatorsByStake from './components/charts/TopValidatorsByStake.vue'
+import TopValidatorsByBlocksProduced from './components/charts/TopValidatorsByBlocksProduced.vue'
 import BlockRewards from './components/charts/BlockRewards.vue'
 import BlockFees from './components/charts/BlockFees.vue'
 import BlockTransactions from './components/charts/BlockTransactions.vue'
 import BlockSnarks from './components/charts/BlockSnarks.vue'
 import LatestSnarkCreators from './components/charts/LatestSnarkCreators.vue'
+import StakeDistribution from './components/charts/StakeDistribution.vue'
 
 import { ref } from 'vue'
 import { useStore } from 'vuex'
@@ -33,16 +34,15 @@ const charts = [
   TotalValidators,
   ActiveValidators,
   LatestBlockCreators,
+  TopValidatorsByBlocksProduced,
   ActiveSnarkWorkers,
   LatestSnarkCreators,
-  TopValidatorsByStake,
   BlockTime,
   BlockRewards,
   BlockFees,
   BlockTransactions,
   BlockSnarks,
-  StatsCard,
-  StatsCard,
+  StakeDistribution,
   StatsCard,
 ]
 
