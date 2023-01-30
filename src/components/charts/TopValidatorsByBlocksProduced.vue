@@ -52,19 +52,19 @@ const options = {
 }
 
 const chartProps = {
-  chartName: 'Top validators by stake 🪧',
+  chartName: 'Top validators over the last 6 hours 🪧',
   additionalValues: [
-    {value: null, text: '% of stake held by top 20 validators', precision: 1},
+    {value: null, text: '% of blocks produced by top validator', precision: 1},
     {value: null, text: '', precision: 2}
   ],
   mainValue: null,
   changeValue: null,
   description: `
   <p>
-    These are the addresses of active validators sorted by their stake in MINA.
+    The addresses of validators sorted by the number of blocks they produced over the last 24 hours.
   </p>
   <p>
-    This signifies how distributed or concentrated the validator power is.
+    This signifies how distributed or concentrated the block production is.
   </p>
   `
 }
@@ -87,9 +87,9 @@ const loadData = async () => {
     body: JSON.stringify({
       query: `
       query MyQuery {
-        stakes(limit: 50, sortBy: BALANCE_DESC, query: {epoch: ${store.getters['chainData/getData'].epoch}}) {
-          balance
-          public_key
+        blocks(limit: 120, query: {canonical: true}, sortBy: BLOCKHEIGHT_DESC) {
+          creator
+          blockHeight
         }
       }
         `
@@ -97,49 +97,38 @@ const loadData = async () => {
   })
 
   let response_ = await response.json()
+  response_ = response_.data.blocks
 
-  // reverse
-  response_ = response_.data.stakes
+  // get a set of validators and count the
+  //  number of blocks produced by each validator
+  let validators = new Set(response_.map(block => block.creator))
+  validators = Array.from(validators)
+
+  validators = validators.map(validator => {
+    return {
+      validator: validator,
+      blocksProduced: response_.filter(block => block.creator == validator).length
+    }
+  })
+
+  validators = validators.sort((a, b) => b.blocksProduced - a.blocksProduced)
 
   // set data element values
   data.value = {
-    labels: response_.map(i => i.public_key.slice(0, 5) + ' ... ' + i.public_key.slice(-5)),
+    labels: validators.map(i => i.validator.slice(0, 5) + ' ... ' + i.validator.slice(-5)),
     datasets: [
       {
-        data: response_.map(i => i.balance),
+        data: validators.map(i => i.blocksProduced),
         backgroundColor: [themeVars.value.infoColor],
       },
     ],
   }
 
-  // helpers
-  const sumArray = (x) => {
-    return x.reduce((a, b) => {return a + b})
-  }
-
-
-  const gini = (array) => {
-    // https://github.com/oliviaguest/gini
-    array = array.sort()
-    let index = Array.from(Array(array.length).keys())
-    let n = array.length
-
-    var top = 0
-    for(var i=0; i< array.length; i++) {
-        top += array[i] * (index[i] * 2 - n - 1)
-    }
-
-    var botom = n * sumArray(array)
-
-    return top / botom
-  }
-
-
-  const balances = response_.map(i => i.balance)
-
   // set other values
-  chartProps.additionalValues[0].value = (sumArray(balances.slice(0, 20)) / 809110096) * 100
-  // chartProps.additionalValues[1].value = gini(balances) * 100
+  chartProps.additionalValues[0].value = (
+    validators[0].blocksProduced /
+    validators.reduce((accum, validator) => accum + validator.blocksProduced, 0)
+  ) * 100
 
   loading.value = false
 }
