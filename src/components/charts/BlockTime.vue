@@ -17,7 +17,14 @@ const options = {
   },
   scales: {
     x: {
-      display: false,
+      ticks: {
+        display: false
+      },
+      title: {
+        display: true,
+        text: 'block',
+      },
+      display: true,
       border: {
         display: false
       },
@@ -145,7 +152,7 @@ onMounted( async () => {
 
 <template>
   <StatsCard :data="chartProps" :loading="loading" @reload="loadData">
-    <BarChart :chartData="data" :width="150" :height="100" :options="options" />
+    <BarChart :chartData="data" :width="150" :height="120" :options="options" />
   </StatsCard>
 </template>
 

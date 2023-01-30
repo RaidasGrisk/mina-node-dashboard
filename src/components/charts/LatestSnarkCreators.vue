@@ -63,7 +63,6 @@ const loadData = async () => {
   })
 
   let response_ = await response.json()
-  console.log(response_)
 
   // helper functions
   const filterUnique = (value, index, self) => {
