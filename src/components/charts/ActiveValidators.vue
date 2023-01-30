@@ -130,7 +130,7 @@ const loadData = async () => {
   let responses = await Promise.all(requests)
   let responses_ = await Promise.all(responses.map(res => res.json()))
   let response_ = responses_.map(response => response.data.blocks)
-  response_ = response_.flat(1)
+  response_ = response_.flat(1).reverse()
 
   // subtract dates to get the difference
   const uniqueAddresses = new Set()
