@@ -141,6 +141,7 @@ onMounted( async () => {
 
   // before triggering the loadData, we've to wait for the store
   // to finish fetching the data, as we rely on it.
+  loading.value = true // set this, or else, there's a weird render
   await storeReady()
   loadData()
 
@@ -150,7 +151,7 @@ onMounted( async () => {
 
 <template>
   <StatsCard :data="chartProps" :loading="loading" @reload="loadData">
-    <BarChart :chartData="data" :width="150" :height="128" :options="options" />
+    <BarChart :chartData="data" :width="150" :height="141" :options="options" />
   </StatsCard>
 </template>
 

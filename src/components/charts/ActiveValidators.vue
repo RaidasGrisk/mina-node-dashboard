@@ -56,7 +56,7 @@ const chartProps = {
   chartName: 'Active validators 🦸',
   additionalValues: [
     {value: null, text: 'validators'},
-    {value: null, text: 'new validators in the last 100 blocks', precision: 0}
+    {value: null, text: 'new validators over the last 100 blocks', precision: 0}
   ],
   mainValue: null,
   changeValue: null,
@@ -87,7 +87,7 @@ const loadData = async () => {
 
   // lets dispatch X requests instead of one big request
   const totalBlocks = 5000
-  const blockChunks = 2500
+  const blockChunks = 1000
   const chainData = store.getters['chainData/getData']
   const lastBlock = chainData.blockchainLength
   const steps = Math.ceil(totalBlocks / blockChunks)
@@ -168,6 +168,7 @@ onMounted( async () => {
 
   // before triggering the loadData, we've to wait for the store
   // to finish fetching the data, as we rely on it.
+  loading.value = true // set this, or else, there's a weird render
   await storeReady()
   loadData()
 

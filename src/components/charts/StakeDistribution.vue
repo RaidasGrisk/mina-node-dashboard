@@ -3,7 +3,7 @@ import { ref, onMounted } from 'vue'
 import StatsCard from '../../components/StatsCard.vue'
 import { useThemeVars } from 'naive-ui'
 
-import { LineChart } from 'vue-chart-3';
+import { BarChart } from 'vue-chart-3';
 import { Chart, registerables } from "chart.js";
 
 Chart.register(...registerables);
@@ -52,7 +52,7 @@ const options = {
 const chartProps = {
   chartName: 'Stake held by top 20 validators 🗺️',
   additionalValues: [
-    {value: null, text: '% in the current epoch', precision: 0},
+    {value: null, text: '% in the current epoch', precision: 1},
     // {value: null, text: '% change over the last epoch', precision: 2}
   ],
   mainValue: null,
@@ -85,8 +85,8 @@ const loadData = async () => {
     labels: response_.map(i => i.epoch),
     datasets: [
       {
-        data: response_.map(i => i.stake_pct_of_top_accounts),
-        borderColor: [themeVars.value.infoColor],
+        data: response_.map(i => (i.stake_pct_of_top_accounts * 100).toPrecision(3)),
+        // borderColor: [themeVars.value.infoColor],
         backgroundColor: [themeVars.value.infoColor],
       },
     ],
@@ -110,7 +110,7 @@ onMounted( async () => {
 
 <template>
   <StatsCard :data="chartProps" :loading="loading" @reload="loadData">
-    <LineChart :chartData="data" :width="150" :height="120" :options="options" />
+    <BarChart :chartData="data" :width="150" :height="141" :options="options" />
   </StatsCard>
 </template>
 

@@ -53,7 +53,7 @@ const chartProps = {
   chartName: 'Total validators 👷',
   additionalValues: [
     {value: null, text: 'validators'},
-    {value: null, text: 'new validators in the last epoch', precision: 0}
+    {value: null, text: 'new validators this epoch', precision: 0}
   ],
   mainValue: null,
   changeValue: null,

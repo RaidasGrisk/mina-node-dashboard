@@ -125,9 +125,9 @@ const addressCharCrop = () => {
   // if modal is brought up, this width becomes 0,
   // this messes up the rendering, hence this exception
   if (width.value == 0) {
-    return 12
+    return 20
   }
-  return Math.round(width.value / 20)
+  return Math.round(width.value / 19)
 
 }
 
