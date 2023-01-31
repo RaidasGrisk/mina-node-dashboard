@@ -120,7 +120,7 @@ onMounted( async () => {
 // this adds complexity but here goes
 // wathc for store changes and reload data
 watch(
-  () => store.getters['chainData/getBlockSpan'], (curr, prev) => {
+  () => store.getters['settings/getBlockSpan'], (curr, prev) => {
     if (curr != prev) {
       loadData()
     }

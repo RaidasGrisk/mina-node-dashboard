@@ -69,7 +69,7 @@ const loadData = async () => {
 
   // config
   const url = 'https://graphql.minaexplorer.com/'
-  const limit = store.getters['chainData/getBlockSpan']
+  const limit = store.getters['settings/getBlockSpan']
 
   // API request
   const response = await fetch(url, {
@@ -126,7 +126,7 @@ onMounted( async () => {
 // this adds complexity but here goes
 // wathc for store changes and reload data
 watch(
-  () => store.getters['chainData/getBlockSpan'], (curr, prev) => {
+  () => store.getters['settings/getBlockSpan'], (curr, prev) => {
     if (curr != prev) {
       loadData()
     }
