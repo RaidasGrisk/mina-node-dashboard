@@ -29,9 +29,7 @@ onMounted( async () => {
           <span>
             Latest <b>Mina</b> stable release:
             <n-skeleton v-if="loading"></n-skeleton>
-            <a v-else :href="data[0].html_url" target="_blank">
-              {{ data[0].tag_name }}
-            </a>
+            <n-button v-else text type="info" tag="a" :href="data[0].html_url" target="_blank">{{ data[0].tag_name }}</n-button>
           </span>
           <span>
             Released:
@@ -40,7 +38,7 @@ onMounted( async () => {
           </span>
           <span>
           </span>
-          <n-button size="tiny" type="text" circle ghost :loading="loading" @click="getLatestMinaReleaseData()">
+          <n-button size="small" type="text" circle ghost :loading="loading" @click="getLatestMinaReleaseData()">
             <template #icon>
               <n-icon>
                 <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path d="M433,288.8c-7.7,0-14.3,5.9-14.9,13.6c-6.9,83.1-76.8,147.9-161.8,147.9c-89.5,0-162.4-72.4-162.4-161.4
@@ -61,7 +59,7 @@ onMounted( async () => {
           <n-space justify="center">
             <n-tooltip trigger="hover">
               <template #trigger>
-                <n-button tertiary circle type="info" tag="a" href="https://github.com/RaidasGrisk/mina-node-dashboard" target="_blank">
+                <n-button tertiary circle type="warning" tag="a" href="https://github.com/RaidasGrisk/mina-node-dashboard" target="_blank">
                   <template #icon>
                     <n-icon>
                       <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 496 512">
@@ -76,7 +74,7 @@ onMounted( async () => {
             </n-tooltip>
             <n-tooltip trigger="hover">
               <template #trigger>
-                <n-button tertiary circle type="info" tag="a" href="https://github.com/RaidasGrisk/mina-node-dashboard-backend" target="_blank">
+                <n-button tertiary circle type="warning" tag="a" href="https://github.com/RaidasGrisk/mina-node-dashboard-backend" target="_blank">
                   <template #icon>
                     <n-icon>
                       <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 496 512">
@@ -94,12 +92,14 @@ onMounted( async () => {
       </n-tag>
     </n-space>
     <br><br>
-    <n-text depth="3">
-      Data sources, Mina explorer: <br>
-      <a href="https://docs.minaexplorer.com/rest-api/" target="_blank">REST-API</a><br>
-      <a href="https://graphql.minaexplorer.com/" target="_blank">GraphQL</a> <br>
-      <a href="https://docs.minaexplorer.com/minaexplorer/bigquery-public-dataset" target="_blank">Archive node BigQuery dataset</a>
-    </n-text>
+    <n-space size="small" vertical>
+      <n-text depth="3">
+        Data sources, Mina explorer:
+      </n-text>
+      <n-button text type="info" tag="a" href="https://docs.minaexplorer.com/rest-api/" target="_blank">REST API</n-button>
+      <n-button text type="info" tag="a" href="https://graphql.minaexplorer.com/" target="_blank">GraphQL</n-button>
+      <n-button text type="info" tag="a" href="https://docs.minaexplorer.com/minaexplorer/bigquery-public-dataset" target="_blank">BigQuery archive node</n-button>
+    </n-space>
   </div>
 </template>
 
