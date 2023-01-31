@@ -26,11 +26,11 @@ const chartProps = {
     Public keys of the latest snark creators. In other words, this is a list of addresses of snark workers that created the most recent snarks.
   </p>
   <p>
-    On the right side, there a number showing how many snarks have this address created in total. So if the number is small, this is a new snark worker.
-    Big number indicate that the worker has been actively producing snarks for a long time.
+    The number on the right side shows how many snarks have this worker created in total.
+    So if the number is small, this is a new worker. Big number indicate that the worker has been actively producing snarks for a long time.
   </p>
   <p>
-    By clicking on an address, you can visit MINA's block explorer and explore the account further.
+    By clicking on worker address, you can visit MINA's block explorer and explore the worker account further.
   </p>
   `
 }

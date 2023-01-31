@@ -75,7 +75,7 @@ const chartProps = {
     SNARK workers are incentivized through a reward mechanism in MINA. They are rewarded with MINA tokens for the computation they perform, and this incentivizes more nodes to join the network and act as SNARK workers.
   </p>
   <p>
-    The data shows number of active SNARK workers, i.e. workers that produced at least 1 SNARK during the last 2500 blocks.
+    A SNARK worker is considered active if it produced at least one SNARK over the period of last 5000 blocks (around one and a half week).
   </p>
   `,
 }

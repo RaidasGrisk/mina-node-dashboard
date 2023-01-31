@@ -50,7 +50,7 @@ const options = {
 }
 
 const chartProps = {
-  chartName: 'Stake held by top 20 validators 🗺️',
+  chartName: 'Stake held by top 20 validators ️🪧',
   additionalValues: [
     {value: null, text: '% in the current epoch', precision: 1},
     // {value: null, text: '% change over the last epoch', precision: 2}

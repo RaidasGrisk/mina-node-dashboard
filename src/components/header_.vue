@@ -82,7 +82,7 @@ const lookBackBlocks = ref(store.getters['settings/getBlockSpan'])
                   </n-form-item>
                   <n-form-item>
                     <template #label>
-                      Look back period in blocks <br> <n-text :depth="3" style="font-size: 80%">(applies for some charts only)</n-text>
+                      Look back period in blocks <br> <n-text :depth="3" style="font-size: 80%">(applies to some charts only)</n-text>
                     </template>
                     <n-space>
                     <n-input-number v-model:value="lookBackBlocks" :min="10" :max="999" style="max-width: 8em;"/>

@@ -52,19 +52,21 @@ const options = {
 }
 
 const chartProps = {
-  chartName: 'Top validators over the last 6 hours 🪧',
+  chartName: 'Top validators over the last 6 hours 🏆',
   additionalValues: [
-    {value: null, text: '% of blocks produced by top validator', precision: 1},
+    {value: null, text: '% of blocks produced by the top validator', precision: 1},
     {value: null, text: '', precision: 2}
   ],
   mainValue: null,
   changeValue: null,
   description: `
   <p>
-    The addresses of validators sorted by the number of blocks they produced over the last 24 hours.
+    Some validators are producing more blocks than others (the chances of a validator being
+    selected to produce a block depends on the stake that is delegated to that validator).
   </p>
   <p>
-    This signifies how distributed or concentrated the block production is.
+    The chart shows the top validators and the number of blocks that have been produced by each.
+    The data covers a window of the last 120 blocks (i.e the last 6 hours). 
   </p>
   `
 }

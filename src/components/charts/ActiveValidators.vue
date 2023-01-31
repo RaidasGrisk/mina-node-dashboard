@@ -62,16 +62,13 @@ const chartProps = {
   changeValue: null,
   description: `
   <p>
-    Above all, validators are pieces of hardware that run MINA software. The combination of all the validators and SNARK workers form the foundation of mina network.
+    Not all validators are active. Many epochs have passed since the start of the network, so some of the validators have been turned off / abandoned / put under a different address and so on.
   </p>
   <p>
-    Validators are maintained primarily by mina community and volunteers, who typically dedicate a computer to the process.
+    Active validators are validators that are currently running and are producing new blocks. Active validators are participating in mina network right this moment.
   </p>
   <p>
-    Similar to stakers (or miners) in other protocols, validators can be selected to produce a block and earn block rewards.
-  </p>
-  <p>
-    The data shows number of active validators, i.e. validators that produced at least 1 block during the last 1000 blocks.
+    A validator is considered active if it produced at least one block over the period of last 5000 blocks (around one and a half week).
   </p>
   `
 }

@@ -26,11 +26,11 @@ const chartProps = {
     Public keys of the latest block creators. In other words, this is a list of addresses of validators that created the most recent blocks.
   </p>
   <p>
-    On the right side, there a number showing how many blocks have this address created in total. So if the number is small, this is a new validator.
+    The number on the right side shows how many blocks have this validator created in total. So if the number is small, this is a new validator.
     Big number indicate that the validator has been actively producing blocks for a long time.
   </p>
   <p>
-    By clicking on an address, you can visit MINA's block explorer and explore the account further.
+    By clicking on validator address, you can visit MINA's block explorer and explore the validator account further.
   </p>
   `
 }
