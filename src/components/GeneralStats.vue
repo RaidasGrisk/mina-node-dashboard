@@ -80,6 +80,50 @@ defineExpose({
           <template #label>
             <n-badge :color="themeVars.tagColor" :offset="[8, 0]">
               <n-text depth="3">
+                Slot
+              </n-text>
+              <template #value>
+                <n-tooltip trigger="hover">
+                  <template #trigger>
+                    <n-icon :depth="2" :color="themeVars.warningColor">
+                      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10s10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z" fill="currentColor"></path></svg>
+                    </n-icon>
+                  </template>
+                  <div class="tooltip">
+                    <p>
+                      Slot is a unit of time. A slot is 3 minutes long. An epoch is divided into 7140 slots.
+                    </p>
+                    <p>
+                      Each slot is a time window, during which a block can be created and added to the blockchain.
+                    </p>
+                  </div>
+                </n-tooltip>
+              </template>
+            </n-badge>
+          </template>
+          <template #prefix>
+            <n-icon :color="themeVars.warningColor">
+              <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 28 28"><g fill="none"><path d="M3 9.5v11.75A3.75 3.75 0 0 0 6.75 25h14.5A3.75 3.75 0 0 0 25 21.25V6.75A3.75 3.75 0 0 0 21.25 3H9.5v6.5H3zm1.5 11.75V18.5h5v5H6.75a2.25 2.25 0 0 1-2.25-2.25zM9.5 11v6h-5v-6h5zM11 23.5v-5h6v5h-6zM17 11v6h-6v-6h6zm1.5 12.5v-5h5v2.75a2.25 2.25 0 0 1-2.25 2.25H18.5zm5-12.5v6h-5v-6h5zm-2.25-6.5a2.25 2.25 0 0 1 2.25 2.25V9.5h-5v-5h2.75zM11 4.5h6v5h-6v-5z" fill="currentColor"></path></g></svg>
+            </n-icon>
+          </template>
+          <template #suffix>
+            <n-spin v-if="!data" :size="20" :stroke="themeVars.warningColor"/>
+            <n-number-animation
+              v-else
+              :from="0"
+              :to="data ? data.slot : 0"
+              show-separator
+              :active="true"
+              :precision="0"
+            />
+            / 7140
+          </template>
+        </n-statistic>
+
+        <n-statistic style="min-width: 10em;">
+          <template #label>
+            <n-badge :color="themeVars.tagColor" :offset="[8, 0]">
+              <n-text depth="3">
                 Block
               </n-text>
               <template #value>
@@ -118,50 +162,6 @@ defineExpose({
               :active="true"
               :precision="0"
             />
-          </template>
-        </n-statistic>
-
-        <n-statistic style="min-width: 10em;">
-          <template #label>
-            <n-badge :color="themeVars.tagColor" :offset="[8, 0]">
-              <n-text depth="3">
-                Slot
-              </n-text>
-              <template #value>
-                <n-tooltip trigger="hover">
-                  <template #trigger>
-                    <n-icon :depth="2" :color="themeVars.warningColor">
-                      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10s10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z" fill="currentColor"></path></svg>
-                    </n-icon>
-                  </template>
-                  <div class="tooltip">
-                    <p>
-                      Slot is a unit of time. A slot is 3 minutes long. An epoch is divided into 7140 slots.
-                    </p>
-                    <p>
-                      Each slot is a time window, during which a block can be created and added to the blockchain.
-                    </p>
-                  </div>
-                </n-tooltip>
-              </template>
-            </n-badge>
-          </template>
-          <template #prefix>
-            <n-icon :color="themeVars.warningColor">
-              <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 28 28"><g fill="none"><path d="M3 9.5v11.75A3.75 3.75 0 0 0 6.75 25h14.5A3.75 3.75 0 0 0 25 21.25V6.75A3.75 3.75 0 0 0 21.25 3H9.5v6.5H3zm1.5 11.75V18.5h5v5H6.75a2.25 2.25 0 0 1-2.25-2.25zM9.5 11v6h-5v-6h5zM11 23.5v-5h6v5h-6zM17 11v6h-6v-6h6zm1.5 12.5v-5h5v2.75a2.25 2.25 0 0 1-2.25 2.25H18.5zm5-12.5v6h-5v-6h5zm-2.25-6.5a2.25 2.25 0 0 1 2.25 2.25V9.5h-5v-5h2.75zM11 4.5h6v5h-6v-5z" fill="currentColor"></path></g></svg>
-            </n-icon>
-          </template>
-          <template #suffix>
-            <n-spin v-if="!data" :size="20" :stroke="themeVars.warningColor"/>
-            <n-number-animation
-              v-else
-              :from="0"
-              :to="data ? data.slot : 0"
-              show-separator
-              :active="true"
-              :precision="0"
-            />
-            / 7140
           </template>
         </n-statistic>
 
