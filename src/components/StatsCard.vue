@@ -42,7 +42,7 @@ const emits = defineEmits(['reload'])
     :header-style="headerStyle"
     :content-style="contentStyle"
     :footer-style="footerStyle"
-    style="border-radius: 8px; min-width: 20em; min-height: 15.4em;"
+    style="border-radius: 8px; min-width: 20em; min-height: 16.5em;"
     hoverable
   >
     <template #header>
@@ -119,8 +119,7 @@ const emits = defineEmits(['reload'])
           <br>
         </template>
       </n-space>
-
-    <slot></slot>
+      <slot></slot>
     </template>
   </n-card>
 

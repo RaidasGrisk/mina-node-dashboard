@@ -43,7 +43,7 @@ const charts = [
   BlockTransactions,
   BlockSnarks,
   StakeDistribution,
-  StatsCard,
+  // StatsCard,
 ]
 
 const reload = () => {
@@ -58,10 +58,10 @@ const reload = () => {
       <n-loading-bar-provider>
         <n-layout>
           <header_ @logoClick="reload" />
-          <n-layout-content content-style="max-width: 140vh; margin: 0 auto; padding: 2em;">
+          <n-layout-content content-style="max-width: 130vh; margin: 0 auto; padding: 2em;">
             <GeneralStats ref="generalStatsRef"/>
             <div style="padding: 3em 0em 3em 0em;">
-              <n-grid :x-gap="12" :y-gap="12" cols="1 s:2 m:3 l:3 xl:4 2xl:4" responsive="screen">
+              <n-grid :x-gap="12" :y-gap="12" cols="1 s:2 m:3 l:3 xl:3 2xl:4" responsive="screen">
                 <n-grid-item v-for="chart_ in charts">
                   <component v-bind:is="chart_"></component>
                 </n-grid-item>
