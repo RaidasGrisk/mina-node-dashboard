@@ -1,5 +1,6 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, watch } from 'vue'
+import { useStore } from 'vuex'
 import StatsCard from '../../components/StatsCard.vue'
 import { useThemeVars } from 'naive-ui'
 
@@ -9,6 +10,7 @@ import { Chart, registerables } from "chart.js";
 Chart.register(...registerables);
 
 const themeVars = useThemeVars()
+const store = useStore()
 
 const data = ref({})
 const options = {
@@ -52,7 +54,7 @@ const chartProps = {
   chartName: 'Block time ⌛',
   additionalValues: [
     {value: null, text: 'minutes'},
-    {value: null, text: 'avg. over the last 20 blocks', precision: 2}
+    {value: null, text: 'avg. over the last 100 blocks', precision: 2}
   ],
   mainValue: 0,
   changeValue: null,
@@ -78,6 +80,7 @@ const loadData = async () => {
 
   // config
   const url = 'https://graphql.minaexplorer.com/'
+  const limit = store.getters['chainData/getBlockSpan']
 
   // API request
   const response = await fetch(url, {
@@ -88,7 +91,7 @@ const loadData = async () => {
     body: JSON.stringify({
       query: `
       query MyQuery {
-        blocks(sortBy: DATETIME_DESC, limit: 100, query: {canonical: true}) {
+        blocks(sortBy: DATETIME_DESC, limit: ${limit+1}, query: {canonical: true}) {
           dateTime
           blockHeight
         }
@@ -137,9 +140,9 @@ const loadData = async () => {
 
   // set other values
   chartProps.additionalValues[0].value = response_.slice(-1)[0].minutesBetweenBlocks
-  chartProps.additionalValues[1].value = response_.slice(-20).reduce(
+  chartProps.additionalValues[1].value = response_.slice(-100).reduce(
     (total, next) => total + next.minutesBetweenBlocks, 0
-  ) / 20
+  ) / 100
 
   loading.value = false
 }
@@ -147,6 +150,16 @@ const loadData = async () => {
 onMounted( async () => {
   loadData()
 })
+
+// this adds complexity but here goes
+// wathc for store changes and reload data
+watch(
+  () => store.getters['chainData/getBlockSpan'], (curr, prev) => {
+    if (curr != prev) {
+      loadData()
+    }
+  }
+)
 
 </script>
 

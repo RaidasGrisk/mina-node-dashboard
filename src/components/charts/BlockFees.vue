@@ -1,5 +1,6 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, watch } from 'vue'
+import { useStore } from 'vuex'
 import StatsCard from '../../components/StatsCard.vue'
 import { useThemeVars } from 'naive-ui'
 
@@ -9,6 +10,7 @@ import { Chart, registerables } from "chart.js";
 Chart.register(...registerables);
 
 const themeVars = useThemeVars()
+const store = useStore()
 
 const data = ref({})
 const options = {
@@ -52,7 +54,7 @@ const chartProps = {
   chartName: 'Fees per block 🏷️',
   additionalValues: [
     {value: null, text: 'MINA, last block', precision: 2},
-    {value: null, text: '% change over the last 20 blocks', precision: 0}
+    {value: null, text: '% change over the last 100 blocks', precision: 0}
   ],
   mainValue: null,
   changeValue: null,
@@ -67,6 +69,7 @@ const loadData = async () => {
 
   // config
   const url = 'https://graphql.minaexplorer.com/'
+  const limit = store.getters['chainData/getBlockSpan']
 
   // API request
   const response = await fetch(url, {
@@ -77,7 +80,7 @@ const loadData = async () => {
     body: JSON.stringify({
       query: `
       query MyQuery {
-        blocks(query: {canonical: true}, limit: 100, sortBy: BLOCKHEIGHT_DESC) {
+        blocks(query: {canonical: true}, limit: ${limit}, sortBy: BLOCKHEIGHT_DESC) {
           blockHeight
           txFees
         }
@@ -105,8 +108,7 @@ const loadData = async () => {
   // set other values
   chartProps.additionalValues[0].value = response_.slice(-1)[0].txFees / 1000000000
   chartProps.additionalValues[1].value = ((response_.slice(-1)[0].txFees /
-    response_.slice(-20)[0].txFees) - 1 ) * 100
-
+    response_.slice(-100)[0].txFees) - 1 ) * 100
 
   loading.value = false
 }
@@ -114,6 +116,16 @@ const loadData = async () => {
 onMounted( async () => {
   loadData()
 })
+
+// this adds complexity but here goes
+// wathc for store changes and reload data
+watch(
+  () => store.getters['chainData/getBlockSpan'], (curr, prev) => {
+    if (curr != prev) {
+      loadData()
+    }
+  }
+)
 
 </script>
 

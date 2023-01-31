@@ -1,5 +1,6 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, watch } from 'vue'
+import { useStore } from 'vuex'
 import StatsCard from '../../components/StatsCard.vue'
 import { useThemeVars } from 'naive-ui'
 
@@ -9,6 +10,7 @@ import { Chart, registerables } from "chart.js";
 Chart.register(...registerables);
 
 const themeVars = useThemeVars()
+const store = useStore()
 
 const data = ref({})
 const options = {
@@ -71,6 +73,7 @@ const loadData = async () => {
 
   // config
   const url = 'https://graphql.minaexplorer.com/'
+  const limit = store.getters['chainData/getBlockSpan']
 
   // API request
   const response = await fetch(url, {
@@ -81,7 +84,7 @@ const loadData = async () => {
     body: JSON.stringify({
       query: `
       query MyQuery {
-        blocks(query: {canonical: true}, limit: 100, sortBy: BLOCKHEIGHT_DESC) {
+        blocks(query: {canonical: true}, limit: ${limit}, sortBy: BLOCKHEIGHT_DESC) {
           blockHeight
           snarkJobs {
             workIds
@@ -119,6 +122,16 @@ const loadData = async () => {
 onMounted( async () => {
   loadData()
 })
+
+// this adds complexity but here goes
+// wathc for store changes and reload data
+watch(
+  () => store.getters['chainData/getBlockSpan'], (curr, prev) => {
+    if (curr != prev) {
+      loadData()
+    }
+  }
+)
 
 </script>
 
