@@ -1,9 +1,10 @@
 <script setup>
-
 import { ref, onMounted } from 'vue'
+import { useThemeVars } from 'naive-ui'
 
 const data = ref([])
 const loading = ref(false)
+const themeVars = useThemeVars()
 
 const getLatestMinaReleaseData = async () => {
   loading.value = true
@@ -55,7 +56,7 @@ onMounted( async () => {
     <n-space justify="center">
       <n-tag round :bordered="true" :size="'large'" style="padding: 20px; min-height: 130px;">
         <n-space justify="center" vertical>
-          <n-h5 style="font-size: 90%">Dashboard source code</n-h5>
+          <n-text depth="3">Dashboard source code</n-text><br>
           <n-space justify="center">
             <n-tooltip trigger="hover">
               <template #trigger>
@@ -94,11 +95,34 @@ onMounted( async () => {
     <br><br>
     <n-space size="small" vertical>
       <n-text depth="3">
-        Data sources, Mina explorer:
+        Data sources:
       </n-text>
-      <n-button text type="info" tag="a" href="https://docs.minaexplorer.com/rest-api/" target="_blank">REST API</n-button>
-      <n-button text type="info" tag="a" href="https://graphql.minaexplorer.com/" target="_blank">GraphQL</n-button>
-      <n-button text type="info" tag="a" href="https://docs.minaexplorer.com/minaexplorer/bigquery-public-dataset" target="_blank">BigQuery archive node</n-button>
+
+      <n-tag round :bordered="false" v-for="item in [
+        { name: 'GraphQL', url: 'https://graphql.minaexplorer.com/' },
+        { name: 'BigQuery', url: 'https://docs.minaexplorer.com/minaexplorer/bigquery-public-dataset' },
+        { name: 'REST API', url: 'https://docs.minaexplorer.com/rest-api/' },
+      ]">
+        <n-button text type="info" tag="a" :href="item.url" target="_blank">{{ item.name }}</n-button>
+        <template #icon>
+          <n-icon :color="themeVars.successColor">
+            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24"><path d="M13 2.05v3.03c3.39.49 6 3.39 6 6.92c0 .9-.18 1.75-.48 2.54l2.6 1.53c.56-1.24.88-2.62.88-4.07c0-5.18-3.95-9.45-9-9.95zM12 19c-3.87 0-7-3.13-7-7c0-3.53 2.61-6.43 6-6.92V2.05c-5.06.5-9 4.76-9 9.95c0 5.52 4.47 10 9.99 10c3.31 0 6.24-1.61 8.06-4.09l-2.6-1.53A6.95 6.95 0 0 1 12 19z" fill="currentColor"></path></svg>
+          </n-icon>
+        </template>
+      </n-tag>
+
+      <!-- <n-tag round :bordered="false">
+        <n-button text type="info" tag="a" href="https://docs.minaexplorer.com/rest-api/" target="_blank">REST API</n-button>
+        <template #icon>
+          <n-icon :color="themeVars.successColor">
+            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24"><path d="M13 2.05v3.03c3.39.49 6 3.39 6 6.92c0 .9-.18 1.75-.48 2.54l2.6 1.53c.56-1.24.88-2.62.88-4.07c0-5.18-3.95-9.45-9-9.95zM12 19c-3.87 0-7-3.13-7-7c0-3.53 2.61-6.43 6-6.92V2.05c-5.06.5-9 4.76-9 9.95c0 5.52 4.47 10 9.99 10c3.31 0 6.24-1.61 8.06-4.09l-2.6-1.53A6.95 6.95 0 0 1 12 19z" fill="currentColor"></path></svg>
+          </n-icon>
+        </template>
+      </n-tag> -->
+
+      <!-- <n-button text type="info" tag="a" href="https://docs.minaexplorer.com/rest-api/" target="_blank">REST API</n-button> -->
+      <!-- <n-button text type="info" tag="a" href="https://graphql.minaexplorer.com/" target="_blank">GraphQL</n-button> -->
+      <!-- <n-button text type="info" tag="a" href="https://docs.minaexplorer.com/minaexplorer/bigquery-public-dataset" target="_blank">BigQuery archive node</n-button> -->
     </n-space>
   </div>
 </template>
