@@ -121,7 +121,7 @@ const lookBackBlocks = ref(store.getters['settings/getBlockSpan'])
   cursor: pointer;
 }
 .logo:hover {
-  filter: drop-shadow(0 0 0.3em var(--info-color));
+  filter: drop-shadow(0em 0em 0.6em var(--info-color));
   transform: scale(1.1);
 }
 
