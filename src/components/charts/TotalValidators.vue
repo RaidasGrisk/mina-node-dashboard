@@ -3,51 +3,17 @@ import { ref, onMounted } from 'vue'
 import StatsCard from '../../components/StatsCard.vue'
 import { useThemeVars } from 'naive-ui'
 
-import { BarChart } from 'vue-chart-3';
-import { Chart, registerables } from "chart.js";
+import { BarChart } from 'vue-chart-3'
+import { Chart, registerables } from 'chart.js'
+import { options } from './defaultChartOptions'
+
 
 Chart.register(...registerables);
 
 const themeVars = useThemeVars()
 
 const data = ref({})
-const options = {
-  plugins: {
-    legend: {display: false}
-  },
-  scales: {
-    x: {
-      ticks: {
-        display: false
-      },
-      title: {
-        display: true,
-        text: 'epoch',
-      },
-      display: true,
-      border: {
-        display: false
-      },
-      grid: {
-        drawBorder: false,
-        display: false,
-        drawOnChartArea: false,
-        drawTicks: false,
-      }
-    },
-    y: {
-      display: false,
-      border: {
-        display: false
-      },
-      grid: {
-        display: false,
-        drawOnChartArea: false,
-        drawTicks: false,
-      }
-    }
-  }
-}
+options.scales.x.title.text = 'epoch'
 
 const chartProps = {
   chartName: 'Total validators 👷',

@@ -5,8 +5,9 @@ import StatsCard from '../../components/StatsCard.vue'
 import { useThemeVars } from 'naive-ui'
 import { storeReady } from '../../utils'
 
-import { BarChart } from 'vue-chart-3';
-import { Chart, registerables } from "chart.js";
+import { BarChart } from 'vue-chart-3'
+import { Chart, registerables } from 'chart.js'
+import { options } from './defaultChartOptions'
 
 Chart.register(...registerables);
 
@@ -14,39 +15,20 @@ const themeVars = useThemeVars()
 const store = useStore()
 
 const data = ref({})
-const options = {
-  plugins: {
-    legend: {display: false}
-  },
-  scales: {
-    x: {
-      ticks: {
-        display: false
-      },
-      title: {
-        display: true,
-        text: 'validator address',
-      },
-      display: true,
-      border: {
-        display: false
-      },
-      grid: {
-        display: false,
-        drawOnChartArea: false,
-        drawTicks: false,
-      }
-    },
-    y: {
-      display: false,
-      border: {
-        display: false
-      },
-      grid: {
-        display: false,
-        drawOnChartArea: false,
-        drawTicks: false,
-      }
+options.scales.x.title.text = 'validator address'
+
+// on click open new window to address on explorer
+options.onClick = (chart_, clickIndex, _) => {
+  const address = data.value.labels[clickIndex[0].index]
+  window.open('https://minaexplorer.com/wallet/' + address, '_blank')
+}
+
+// proper way to trim tooltip labels on hover
+// https://www.chartjs.org/docs/latest/configuration/tooltip.html
+options.plugins.tooltip = {
+  callbacks: {
+    title: (context) => {
+      return context[0].label.slice(0, 5) + ' ... ' + context[0].label.slice(-5)
     }
   }
 }
@@ -66,7 +48,7 @@ const chartProps = {
   </p>
   <p>
     The chart shows the top validators and the number of blocks that have been produced by each.
-    The data covers a window of the last 120 blocks (i.e the last 6 hours). 
+    The data covers a window of the last 120 blocks (i.e the last 6 hours).
   </p>
   `
 }
@@ -117,7 +99,7 @@ const loadData = async () => {
 
   // set data element values
   data.value = {
-    labels: validators.map(i => i.validator.slice(0, 5) + ' ... ' + i.validator.slice(-5)),
+    labels: validators.map(i => i.validator),
     datasets: [
       {
         data: validators.map(i => i.blocksProduced),

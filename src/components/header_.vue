@@ -16,7 +16,7 @@ const lookBackBlocks = ref(store.getters['settings/getBlockSpan'])
 
 <template>
   <n-layout-header bordered>
-    <n-page-header :style="isMobile ? 'padding: 0.5em 1em 0.5em 1em;': 'padding: 1em 3em 1em 3em; max-width: 130vh; margin: 0 auto;'">
+    <n-page-header :style="isMobile ? 'padding: 0.5em 1em 0.5em 1em;': 'padding: 1em 3em 1em 3em; max-width: 125vh; margin: 0 auto;'">
       <template #title>
         <a href="/" style="text-decoration: none; color: inherit">
           <b>MINA protocol</b> <n-text depth="3"><br> Node dashboard</n-text>
@@ -26,7 +26,7 @@ const lookBackBlocks = ref(store.getters['settings/getBlockSpan'])
       </template>
       <template #avatar>
         <n-element>
-          <n-avatar :size="64" style="margin-left: 1.7em;" class="logo" @click="$emit('logoClick')">
+          <n-avatar :size="64" class="logo" @click="$emit('logoClick')">
             <n-text style="font-size: 36px;">
               🛰️
             </n-text>
