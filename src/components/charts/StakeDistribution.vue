@@ -24,7 +24,22 @@ const chartProps = {
   ],
   mainValue: null,
   changeValue: null,
-  description: ''
+  description: `
+  <p>
+    The chart shows the percentage of the total stake in the network that is controlled by the top 20 validators.
+    This metric can be used to track the concentration of power in the network over time.
+  </p>
+  <p>
+    Validators are selected to create new blocks based on the amount of stake they hold in the network,
+    with a higher amount of stake resulting in a higher likelihood of being selected as a validator.
+  </p>
+  <p>
+    The metric is an important factor in ensuring the decentralization and security of the network,
+    and can be used to monitor the distribution of power in the network over time.
+    If the percentage of stake held by the top validators remains relatively stable (or decreases) over time,
+    it may indicate that the network is well-distributed and decentralized.
+  </p>
+  `
 }
 
 const loading = ref(false)

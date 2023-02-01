@@ -48,8 +48,9 @@ const chartProps = {
   changeValue: null,
   description: `
   <p>
-    Some validators are producing more blocks than others (the chances of a validator being
-    selected to produce a block depends on the stake that is delegated to that validator).
+    Some validators are producing more blocks than others.
+    Validators are selected to create new blocks based on the amount of stake they hold in the network,
+    with a higher amount of stake resulting in a higher likelihood of being selected as a validator.
   </p>
   <p>
     The chart shows the top validators and the number of blocks that have been produced by each.

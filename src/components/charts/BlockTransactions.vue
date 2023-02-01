@@ -26,7 +26,19 @@ const chartProps = {
   ],
   mainValue: null,
   changeValue: null,
-  description: ''
+  description: `
+  <p>
+    The number of transactions in each block is different. At maximum, 120 transactions can be included in each block.
+  </p>
+  <p>
+    A higher number of transactions per block indicates an increase in the usage of the network,
+    as more users are making transactions and requiring them to be processed and added to the blockchain.
+  </p>
+  <p>
+    Transactions per block is important because it helps to gauge the network's capacity and overall health.
+  </p>
+
+  `
 }
 
 const loading = ref(false)

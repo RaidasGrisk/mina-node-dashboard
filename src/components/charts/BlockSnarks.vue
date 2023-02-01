@@ -28,7 +28,12 @@ const chartProps = {
   changeValue: null,
   description: `
   <p>
-    What are snarks?
+    The number of SNARKs produced per block is an indicator of the network's ability to generate and include
+    these proofs in a timely manner, and is an important factor in maintaining the security and privacy of the network.
+  </p>
+  <p>
+    A higher number of SNARKs produced per block indicates a more efficient network,
+    as more transactions can be verified and added to the blockchain in a shorter amount of time.
   </p>
   `
 }
