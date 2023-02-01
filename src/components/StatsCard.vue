@@ -29,7 +29,8 @@ const props = defineProps({
     changeValue: {type: Number, default: null},
     description: {type: String, default: null},
   }},
-  loading: {type: Boolean, default: false}
+  loading: {type: Boolean, default: false},
+  showChartOnOpenModal: {type: Boolean, default: true},
 })
 const emits = defineEmits(['reload'])
 </script>
@@ -119,7 +120,7 @@ const emits = defineEmits(['reload'])
           <br>
         </template>
       </n-space>
-      <slot></slot>
+      <slot v-if="props.showChartOnOpenModal ? true: !showModal"></slot>
     </template>
   </n-card>
 

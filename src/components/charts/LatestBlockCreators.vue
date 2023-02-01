@@ -138,7 +138,7 @@ onMounted( async () => {
 </script>
 
 <template>
-  <StatsCard :data="chartProps" :loading="loading" @reload="loadData">
+  <StatsCard :data="chartProps" :loading="loading" :showChartOnOpenModal="false" @reload="loadData">
     <div style="height: 12px;"/>
     <n-collapse-transition :appear="true">
       <div ref="statscard_width_ref" style="width: 100%;" />
