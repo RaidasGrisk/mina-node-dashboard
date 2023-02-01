@@ -12,9 +12,11 @@ Chart.register(...registerables);
 
 const themeVars = useThemeVars()
 const store = useStore()
-
 const data = ref({})
-options.scales.x.title.text = 'block'
+
+// deep copy or else it will leak to other chart components
+const options_ = JSON.parse(JSON.stringify(options))
+options_.scales.x.title.text = 'block'
 
 const chartProps = {
   chartName: 'Block rewards 🔖',
@@ -26,12 +28,15 @@ const chartProps = {
   changeValue: null,
   description: `
     <p>
-      Block reward is reward given to the validator that produced a block.
+      Block reward is a reward given to a validator for creating a block.
     </p>
     <p>
-      The reward for producing a block is 720 MINA tokens. Supercharged rewards are 1440 Mina tokens
+      The reward for producing a block is 720 MINA. Supercharged rewards are 1440 Mina
       (will likely be removed as per <a href="https://github.com/MinaProtocol/MIPs/blob/main/MIPS/mip-remove-supercharged-rewards.md" target="_blank">MIP<a/>).
     </p>
+    <p>
+      The logic behind block rewards is to incentivize validators to secure and maintain the network by providing them with a reward for their efforts.
+    <p/>
   `
 }
 
@@ -108,7 +113,7 @@ watch(
 
 <template>
   <StatsCard :data="chartProps" :loading="loading" @reload="loadData">
-    <BarChart :chartData="data" :width="150" :height="120" :options="options" />
+    <BarChart :chartData="data" :width="150" :height="120" :options="options_" />
   </StatsCard>
 </template>
 

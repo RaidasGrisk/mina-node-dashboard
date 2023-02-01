@@ -13,19 +13,23 @@ Chart.register(...registerables);
 
 const themeVars = useThemeVars()
 const store = useStore()
-
 const data = ref({})
-options.scales.x.title.text = 'validator address'
+
+// deep copy or else it will leak to other chart components
+const options_ = JSON.parse(JSON.stringify(options))
+options_.scales.x.title.text = 'validator address'
 
 // on click open new window to address on explorer
-options.onClick = (chart_, clickIndex, _) => {
-  const address = data.value.labels[clickIndex[0].index]
-  window.open('https://minaexplorer.com/wallet/' + address, '_blank')
+options_.onClick = (chart_, clickIndex, _) => {
+  if (clickIndex.length > 0) {
+    const address = data.value.labels[clickIndex[0].index]
+    window.open('https://minaexplorer.com/wallet/' + address, '_blank')
+  }
 }
 
 // proper way to trim tooltip labels on hover
 // https://www.chartjs.org/docs/latest/configuration/tooltip.html
-options.plugins.tooltip = {
+options_.plugins.tooltip = {
   callbacks: {
     title: (context) => {
       return context[0].label.slice(0, 5) + ' ... ' + context[0].label.slice(-5)
@@ -37,6 +41,7 @@ const chartProps = {
   chartName: 'Top validators over the last 6 hours 🏆',
   additionalValues: [
     {value: null, text: '% of blocks produced by the top validator', precision: 1},
+    // {value: null, text: 'out of 120 blocks have been created by the top validator', precision: 0},
     {value: null, text: '', precision: 2}
   ],
   mainValue: null,
@@ -135,7 +140,7 @@ onMounted( async () => {
 
 <template>
   <StatsCard :data="chartProps" :loading="loading" @reload="loadData">
-    <BarChart :chartData="data" :width="150" :height="141" :options="options" />
+    <BarChart :chartData="data" :width="150" :height="141" :options="options_" />
   </StatsCard>
 </template>
 

@@ -7,13 +7,14 @@ import { BarChart } from 'vue-chart-3'
 import { Chart, registerables } from 'chart.js'
 import { options } from './defaultChartOptions'
 
-
 Chart.register(...registerables);
 
 const themeVars = useThemeVars()
-
 const data = ref({})
-options.scales.x.title.text = 'epoch'
+
+// deep copy or else it will leak to other chart components
+const options_ = JSON.parse(JSON.stringify(options))
+options_.scales.x.title.text = 'epoch'
 
 const chartProps = {
   chartName: 'Total validators 👷',
@@ -84,7 +85,7 @@ onMounted( async () => {
 
 <template>
   <StatsCard :data="chartProps" :loading="loading" @reload="loadData">
-    <BarChart :chartData="data" :width="150" :height="120" :options="options" />
+    <BarChart :chartData="data" :width="150" :height="120" :options="options_" />
   </StatsCard>
 </template>
 

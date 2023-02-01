@@ -10,9 +10,11 @@ import { options } from './defaultChartOptions'
 Chart.register(...registerables);
 
 const themeVars = useThemeVars()
-
 const data = ref({})
-options.scales.x.title.text = 'epoch'
+
+// deep copy or else it will leak to other chart components
+const options_ = JSON.parse(JSON.stringify(options))
+options_.scales.x.title.text = 'epoch'
 
 const chartProps = {
   chartName: 'Stake held by top 20 validators ️🪧',
@@ -75,7 +77,7 @@ onMounted( async () => {
 
 <template>
   <StatsCard :data="chartProps" :loading="loading" @reload="loadData">
-    <BarChart :chartData="data" :width="150" :height="141" :options="options" />
+    <BarChart :chartData="data" :width="150" :height="141" :options="options_" />
   </StatsCard>
 </template>
 

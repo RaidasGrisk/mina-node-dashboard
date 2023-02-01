@@ -12,9 +12,11 @@ Chart.register(...registerables);
 
 const themeVars = useThemeVars()
 const store = useStore()
-
 const data = ref({})
-options.scales.x.title.text = 'block'
+
+// deep copy or else it will leak to other chart components
+const options_ = JSON.parse(JSON.stringify(options))
+options_.scales.x.title.text = 'block'
 
 const chartProps = {
   chartName: 'Fees per block 🏷️',
@@ -46,7 +48,7 @@ const loadData = async () => {
 
   // config
   const url = 'https://graphql.minaexplorer.com/'
-  const limit = store.getters['chainData/getBlockSpan']
+  const limit = store.getters['settings/getBlockSpan']
 
   // API request
   const response = await fetch(url, {
@@ -108,7 +110,7 @@ watch(
 
 <template>
   <StatsCard :data="chartProps" :loading="loading" @reload="loadData">
-    <BarChart :chartData="data" :width="150" :height="120" :options="options" />
+    <BarChart :chartData="data" :width="150" :height="120" :options="options_" />
   </StatsCard>
 </template>
 

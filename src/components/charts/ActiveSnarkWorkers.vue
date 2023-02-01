@@ -10,9 +10,11 @@ import { options } from './defaultChartOptions'
 Chart.register(...registerables);
 
 const themeVars = useThemeVars()
-
 const data = ref({})
-options.scales.x.title.text = 'block'
+
+// deep copy or else it will leak to other chart components
+const options_ = JSON.parse(JSON.stringify(options))
+options_.scales.x.title.text = 'block'
 
 const chartProps = {
   chartName: 'Active snark workers ‍🛠️',
@@ -95,7 +97,7 @@ onMounted( async () => {
 
 <template>
   <StatsCard :data="chartProps" :loading="loading" @reload="loadData">
-    <LineChart :chartData="data" :width="150" :height="120" :options="options" />
+    <LineChart :chartData="data" :width="150" :height="120" :options="options_" />
   </StatsCard>
 </template>
 
