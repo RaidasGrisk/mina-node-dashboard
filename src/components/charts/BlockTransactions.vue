@@ -35,7 +35,7 @@ const chartProps = {
     as more users are making transactions and requiring them to be processed and added to the blockchain.
   </p>
   <p>
-    Transactions per block is important because it helps to gauge the network's capacity and overall health.
+    Transactions per block are important because it helps to gauge the network's capacity and overall health.
   </p>
 
   `

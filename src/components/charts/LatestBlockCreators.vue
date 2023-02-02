@@ -22,10 +22,10 @@ const chartProps = {
   </p>
   <p>
     The number on the right side shows how many blocks have this validator created in total. So if the number is small, this is a new validator.
-    Big number indicate that the validator has been actively producing blocks for a long time.
+    A big number indicates that the validator has been actively producing blocks for a long time.
   </p>
   <p>
-    By clicking on validator address, you can visit MINA's block explorer and explore the validator account further.
+    By clicking on the validator address, you can visit MINA's block explorer and explore the validator account further.
   </p>
   `
 }

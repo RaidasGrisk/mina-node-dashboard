@@ -29,10 +29,10 @@ const chartProps = {
   description: `
     <p>
       Every transaction has a fee. The sender is free to decide the size of the fee.
-      Higher fee will increase the change of transaction being included into the next block.
+      A higher fee will increase the change of transaction being included in the next block.
     </p>
     <p>
-      As a general rule, fees go up as the number of transactions over a period of time increase.
+      As a general rule, fees go up as the number of transactions increase.
     </p>
     <p>
       The chart shows the sum of fees in MINA over all of the transactions included in a block.

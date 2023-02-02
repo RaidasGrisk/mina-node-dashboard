@@ -38,14 +38,14 @@ const chartProps = {
     </p>
   </p>
   <p>
-    Before adding a new block, block producers must purchase a SNARK from SNARK workers that contains proofs of new transactions. Only after doing that
+    Before adding a new block, block producers must buy a SNARK from SNARK workers that contain proof of new transactions. Only after doing that
     can a block producer produce a new block.
   </p>
   <p>
     SNARK workers are incentivized through a reward mechanism in MINA. They are rewarded with MINA tokens for the computation they perform, and this incentivizes more nodes to join the network and act as SNARK workers.
   </p>
   <p>
-    A SNARK worker is considered active if it produced at least one SNARK over the period of last 5000 blocks (around one and a half week).
+    A SNARK worker is considered active if it produced at least one SNARK over the period of the last 5000 blocks (around one and a half weeks).
   </p>
   `,
 }

@@ -28,7 +28,7 @@ const chartProps = {
   changeValue: null,
   description: `
     <p>
-      Block reward is a reward given to a validator for creating a block.
+      A block reward is a reward given to a validator for creating a block.
     </p>
     <p>
       The reward for producing a block is 720 MINA. Supercharged rewards are 1440 Mina

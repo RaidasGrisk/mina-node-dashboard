@@ -29,13 +29,13 @@ const chartProps = {
   changeValue: null,
   description: `
   <p>
-    Not all validators are active. Many epochs have passed since the start of the network, so some of the validators have been turned off / abandoned / put under a different address and so on.
+    Not all validators are active. Many epochs have passed since the start of the network, so some of the validators have been turned off / abandoned / put under a different address, and so on.
   </p>
   <p>
-    Active validators are validators that are currently running and are producing new blocks. Active validators are participating in mina network right this moment.
+    Active validators are validators that are currently running and are producing new blocks. Active validators are participating in Mina network right this moment.
   </p>
   <p>
-    A validator is considered active if it produced at least one block over the period of last 5000 blocks (around one and a half week).
+    A validator is considered active if it produced at least one block throughout the last 5000 blocks (around one and a half weeks).
   </p>
   `
 }

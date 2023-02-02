@@ -26,16 +26,16 @@ const chartProps = {
   changeValue: null,
   description: `
   <p>
-    Above all, validators are pieces of hardware that run MINA software. The combination of all the validators and SNARK workers form the foundation of mina network.
+    Above all, validators are pieces of hardware that run Mina software. The combination of all the validators and SNARK workers forms the foundation of Mina network.
   </p>
   <p>
     Validators are randomly selected to create new blocks.
   </p>
   <p>
-    Validators are maintained primarily by mina community and volunteers, who typically dedicate a separate hardware to the process.
+    Validators are maintained primarily by Mina community and volunteers, who typically dedicate separate hardware to the process.
   </p>
   <p>
-    The chart shows number of <b>total</b> validators, i.e. validators that produced at least 1 block since the inception of the network.
+    The chart shows the number of <b>total</b> validators, i.e. validators that produced at least 1 block since the inception of the network.
   </p>
   `
 }

@@ -34,9 +34,9 @@ const chartProps = {
     with a higher amount of stake resulting in a higher likelihood of being selected as a validator.
   </p>
   <p>
-    The metric is an important factor in ensuring the decentralization and security of the network,
+    The metric is an important factor in ensuring the decentralization and security of the network
     and can be used to monitor the distribution of power in the network over time.
-    If the percentage of stake held by the top validators remains relatively stable (or decreases) over time,
+    If the percentage of the stake held by the top validators remains relatively stable (or decreases) over time,
     it may indicate that the network is well-distributed and decentralized.
   </p>
   `

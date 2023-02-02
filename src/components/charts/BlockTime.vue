@@ -31,11 +31,14 @@ const chartProps = {
     The difference in minutes between two subsequent blocks.
   </p>
   <p>
-    Note that the smallest block time possible is 3 minutes. That is because time on Mina is measured in slots. A slot is 3 minutes long.
+    Note that the smallest block time possible is 3 minutes.
+    That is because time on Mina is measured in slots. A slot is 3 minutes long.
   </p>
   <p>
-      Block producers can win the chance to produce a block during a slot. If selected block producer does not produce a block in a given slot,
-      then the next possiblity to build a block is during the next slot. That is why blocks are build in between the time intervals of 3, 6, 9, 12 ... minutes.
+    Block producers can win the chance to produce a block during a slot.
+    If the selected block producer does not produce a block in a given slot,
+    then the next possibility to build a block is during the next slot.
+    That is why blocks are built in between the time intervals of 3, 6, 9, and 12 or more minutes.
   </p>
   `
 }
