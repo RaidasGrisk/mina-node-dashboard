@@ -1,5 +1,4 @@
 import { darkTheme, lightTheme } from 'naive-ui'
-import { useThemeVars } from 'naive-ui'
 import { merge } from '../../utils'
 
 const state = () => ({
