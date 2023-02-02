@@ -1,6 +1,11 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 
+// hljs stuff
+import hljs from 'highlight.js/lib/core'
+import json from 'highlight.js/lib/languages/json'
+hljs.registerLanguage('json', json)
+
 // basic styles
 const headerStyle = {
   'padding-bottom': '0.5em',
@@ -201,10 +206,10 @@ const emits = defineEmits(['reload'])
 
   <!-- // json modal -->
   <n-modal v-model:show="showJsonModal">
-    <n-card style="max-width: 30em" :bordered="false">
+    <n-card style="max-width: 30em; padding: 1em 1em 1em 1em" :bordered="false" size="medium">
       <n-scrollbar style="max-height: 50em;">
-        <n-text code style="min-width: 55em; padding: 1em;">
-          <n-code :code="JSON.stringify(props.jsonData, null, 2)" style="font-size: 10px;" :hljs="undefined"/>
+        <n-text code style="min-width: 100%; padding: 1em;">
+          <n-code :code="JSON.stringify(props.jsonData, null, 2)" style="font-size: 10px;" :hljs="hljs" language="json"/>
         </n-text>
       </n-scrollbar>
     </n-card>
@@ -212,7 +217,7 @@ const emits = defineEmits(['reload'])
 
 </template>
 
-<style scoped>
+<style>
 
 .gradientShadow {
   transform: translate3d(0, 0, 0) scale(1);
@@ -254,6 +259,13 @@ const emits = defineEmits(['reload'])
 
 .gradientShadow:hover {
   /* transform: scale(1.01); */
+}
+
+.hljs-number {
+  color: #18a058 !important;
+}
+.hljs-string {
+  color: #2080f0 !important;
 }
 
 </style>

@@ -3,11 +3,17 @@ import { ref, onMounted, watch } from 'vue'
 import { useStore } from 'vuex'
 import { useThemeVars, useLoadingBar } from 'naive-ui'
 
+// hljs stuff
+import hljs from 'highlight.js/lib/core'
+import json from 'highlight.js/lib/languages/json'
+hljs.registerLanguage('json', json)
+
 const data = ref(null)
 const themeVars = useThemeVars()
 
 const loadingBar = useLoadingBar()
 const store = useStore()
+const showJsonModal = ref(false)
 
 const getData = async () => {
   data.value = null // to trigger animation
@@ -168,17 +174,47 @@ defineExpose({
       </n-space>
     </div>
   </n-collapse-transition>
-  <n-divider style="max-width: 45em; display: block; margin-left: auto; margin-right: auto;"/>
+
+  <!-- divider with button to show JSON data -->
+  <div style="width: 70%; display: block; margin-left: auto; margin-right: auto;">
+    <n-divider>
+      <n-button quaternary type="info" @click="showJsonModal = true" size="small">
+        <n-icon size="20" :depth="4">
+          <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24"><path d="M4 7v2c0 .55-.45 1-1 1s-1 .45-1 1v2c0 .55.45 1 1 1s1 .45 1 1v2c0 1.66 1.34 3 3 3h2c.55 0 1-.45 1-1s-.45-1-1-1H7c-.55 0-1-.45-1-1v-2c0-1.3-.84-2.42-2-2.83v-.34C5.16 11.42 6 10.3 6 9V7c0-.55.45-1 1-1h2c.55 0 1-.45 1-1s-.45-1-1-1H7C5.34 4 4 5.34 4 7zm17 3c-.55 0-1-.45-1-1V7c0-1.66-1.34-3-3-3h-2c-.55 0-1 .45-1 1s.45 1 1 1h2c.55 0 1 .45 1 1v2c0 1.3.84 2.42 2 2.83v.34c-1.16.41-2 1.52-2 2.83v2c0 .55-.45 1-1 1h-2c-.55 0-1 .45-1 1s.45 1 1 1h2c1.66 0 3-1.34 3-3v-2c0-.55.45-1 1-1s1-.45 1-1v-2c0-.55-.45-1-1-1z" fill="currentColor"></path></svg>
+        </n-icon>
+      </n-button>
+    </n-divider>
+  </div>
+  <n-modal v-model:show="showJsonModal">
+    <n-card style="max-width: 43em; padding: 1em 1em 1em 1em" :bordered="false" size="medium">
+      <n-scrollbar style="max-height: 50em;">
+        <n-text code style="min-width: 100%; padding: 1em;">
+          <n-code :code="JSON.stringify(data, null, 2)" style="font-size: 10px;" :hljs="hljs" language="json"/>
+        </n-text>
+      </n-scrollbar>
+    </n-card>
+  </n-modal>
 
 </template>
 
-<style scoped>
+<style>
 .tooltip {
   max-width: 30em;
   transform-origin: inherit;
   font-size: 70%;
   padding: 2em 2em 2em 2em;
   text-align: justify;
+}
+
+.hljs-attr {
+  /* this is not working v-bind does not work in this case :/ */
+  color: v-bind(themeVars.infoColorHover) !important;
+}
+.hljs-number {
+  color: #18a058 !important;
+}
+.hljs-string {
+  color: #2080f0 !important;
 }
 
 </style>
