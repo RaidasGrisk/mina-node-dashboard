@@ -1,17 +1,12 @@
 <script setup>
 import { ref, onMounted, computed } from 'vue'
-import { useElementSize } from '@vueuse/core'
 import StatsCard from '../../components/StatsCard.vue'
+import AddressList from './utils/AddressList.vue'
 import { useThemeVars } from 'naive-ui'
 
 const themeVars = useThemeVars()
 
 const data = ref({})
-const addressMapping = ref({})
-
-// make responsive width
-const statscard_width_ref = ref(null)
-const { width, height } = useElementSize(statscard_width_ref)
 
 const chartProps = {
   chartName: 'Latest block creators‍ 📦',
@@ -64,27 +59,10 @@ const loadData = async () => {
 
   let response_ = await response.json()
 
-  // helper functions
-  const filterUnique = (value, index, self) => {
-    return self.findIndex(v => v.blockHeight === value.blockHeight) === index
-  }
-
-  // reverse
-  response_ = response_.data.blocks
-
-  // filter out duplicates
-  response_ = response_.filter(filterUnique)
-
   // trim
-  response_ = response_.slice(0, 7)
-
-  // set data element values
-  data.value = response_.map(i => i.creator)
+  response_ = response_.data.blocks.slice(0, 7)
 
   // run the other query to get the number of blocks produced by each address
-  // start of by mapping address to number of blocks produced
-  const address_mapping = {}
-
   // make an array of queries with selected creators
   let bodies = response_.map(i => JSON.stringify({
     query: `
@@ -110,25 +88,26 @@ const loadData = async () => {
   let requests_ = await Promise.all(requests)
   let requests_data = await Promise.all(requests_.map(res => res.json()))
 
-  // add the result to mapping
-  for (const index in requests_data) {
-    let creator = requests_data[index].data.blocks[0].creator
-    address_mapping[creator] = requests_data[index].data.blocks.length
-  }
-  addressMapping.value = address_mapping
+  // map each address to the number of blocks created
+  let result = response_.map(item => {
+    return {
+      address: item.creator,
+      stat: requests_data.filter(
+        item_ => item_.data.blocks[0].creator == item.creator
+      )[0].data.blocks.length
+    }
+  })
 
+  // convert the number of blocks created NUMBER to STRING
+  result = result.map(item => {
+    return {
+      address: item.address,
+      stat: item.stat >= 100 ? '+100' : item.stat.toString()
+    }
+  })
+
+  data.value = result
   loading.value = false
-}
-
-const addressCharCrop = () => {
-
-  // if modal is brought up, this width becomes 0,
-  // this messes up the rendering, hence this exception
-  if (width.value == 0) {
-    return 20
-  }
-  return Math.round(width.value / 19)
-
 }
 
 onMounted( async () => {
@@ -138,51 +117,11 @@ onMounted( async () => {
 </script>
 
 <template>
-  <StatsCard :data="chartProps" :loading="loading" :showChartOnOpenModal="false" @reload="loadData">
-    <div style="height: 12px;"/>
-    <n-collapse-transition :appear="true">
-      <div ref="statscard_width_ref" style="width: 100%;" />
-      <n-row>
-        <n-space v-for="address in data" justify="space-between" style="white-space: nowrap;">
-          <n-text code class="codeStyles">
-            <n-text depth="2" type="success">
-              <a :href="'https://minaexplorer.com/wallet/' + address" target="_blank">
-                {{ address.slice(0, addressCharCrop()) + '...' + address.slice(-addressCharCrop()) }}
-              </a>
-            </n-text>
-          </n-text>
-          <n-divider vertical style="height: 12px;"/>
-          <n-tooltip trigger="hover" placement="right" style="font-size: 70%;">
-            <template #trigger>
-              <n-text depth="3" style="font-size: 0.90em">
-                {{ addressMapping[address] == 100 ? addressMapping[address].toString() + '+' : addressMapping[address] }}
-              </n-text>
-            </template>
-            Total blocks created
-          </n-tooltip>
-        </n-space>
-      </n-row>
-    </n-collapse-transition>
+  <StatsCard :data="chartProps" :loading="loading" :showChartOnOpenModal="true" @reload="loadData">
+    <AddressList :data="data"/>
   </StatsCard>
 </template>
 
 <style scoped>
-
-.codeStyles {
-  font-size: 0.8em
-}
-
-a {
-  color: v-bind(themeVars.infoColor);
-  text-decoration: inherit;
-}
-
-a:hover {
-  color: v-bind(themeVars.infoColorHover);
-}
-
-a:link:active, a:visited {
-  color: v-bind(themeVars.successColor);;
-}
 
 </style>
