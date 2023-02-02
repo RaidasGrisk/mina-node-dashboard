@@ -7,6 +7,7 @@ import { useThemeVars } from 'naive-ui'
 const themeVars = useThemeVars()
 
 const data = ref({})
+const jsonData = ref({})
 
 const chartProps = {
   chartName: 'Latest block creators‍ 📦',
@@ -98,6 +99,8 @@ const loadData = async () => {
     }
   })
 
+  jsonData.value = result
+
   // convert the number of blocks created NUMBER to STRING
   result = result.map(item => {
     return {
@@ -118,7 +121,7 @@ onMounted( async () => {
 </script>
 
 <template>
-  <StatsCard :data="chartProps" :loading="loading" :showChartOnOpenModal="true" @reload="loadData">
+  <StatsCard :data="chartProps" :loading="loading" @reload="loadData" :jsonData="jsonData">
     <AddressList :data="data"/>
   </StatsCard>
 </template>

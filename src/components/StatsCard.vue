@@ -15,12 +15,18 @@ const footerStyle = {
   'font-size': '0.9em'
 }
 
+// clipboard util
+const copyToClipboard = () => {
+  navigator.clipboard.writeText(JSON.stringify(props.jsonData))
+}
+
 // gradient shadow
 const randColor = Math.floor(Math.random()*16777215).toString(16)
 const color = `linear-gradient(-45deg, #${randColor} 0%, #00ff87 100% )`
 
 // other vars
 const showModal = ref(false)
+const showJsonModal = ref(false)
 const props = defineProps({
   data: {type: Object, default: {
     chartName: { type: String, default: '//' },
@@ -31,6 +37,7 @@ const props = defineProps({
   }},
   loading: {type: Boolean, default: false},
   showChartOnOpenModal: {type: Boolean, default: true},
+  jsonData: {type: Object, default: {}},
 })
 const emits = defineEmits(['reload'])
 </script>
@@ -167,10 +174,41 @@ const emits = defineEmits(['reload'])
           <n-text depth="3" style="font-size: 80%">
             <div v-html="props.data.description" style="text-align: justify; text-justify: inter-word;"></div>
           </n-text>
+          <br>
+          <n-space>
+            <n-button strong secondary type="info" size="small" @click="showJsonModal = true">
+              <n-icon :size="24">
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32"><path d="M31 11v10h-2l-2-6v6h-2V11h2l2 6v-6h2z" fill="currentColor"></path><path d="M21.334 21h-2.667A1.668 1.668 0 0 1 17 19.334v-6.667A1.668 1.668 0 0 1 18.666 11h2.667A1.668 1.668 0 0 1 23 12.666v6.667A1.668 1.668 0 0 1 21.334 21zM19 19h2v-6h-2z" fill="currentColor"></path><path d="M13.334 21H9v-2h4v-2h-2a2.002 2.002 0 0 1-2-2v-2.334A1.668 1.668 0 0 1 10.666 11H15v2h-4v2h2a2.002 2.002 0 0 1 2 2v2.333A1.668 1.668 0 0 1 13.334 21z" fill="currentColor"></path><path d="M5.333 21H2.667A1.668 1.668 0 0 1 1 19.334V17h2v2h2v-8h2v8.334A1.668 1.668 0 0 1 5.333 21z" fill="currentColor"></path></svg>
+              </n-icon>
+            </n-button>
+            <n-tooltip placement="right" trigger="click" :show-arrow="false">
+              <template #trigger>
+                <n-button strong secondary type="info" size="small" @click="copyToClipboard()">
+                  <template #icon>
+                    <n-icon :size="15">
+                      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24"><path opacity=".3" d="M8 7h11v14H8z" fill="currentColor"></path><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z" fill="currentColor"></path></svg>
+                    </n-icon>
+                  </template>
+                </n-button>
+              </template>
+              <span>Copied!</span>
+            </n-tooltip>
+          </n-space>
         </template>
       </n-card>
     </n-modal>
   </template>
+
+  <!-- // json modal -->
+  <n-modal v-model:show="showJsonModal">
+    <n-card style="max-width: 30em" :bordered="false">
+      <n-scrollbar style="max-height: 50em;">
+        <n-text code style="min-width: 55em; padding: 1em;">
+          <n-code :code="JSON.stringify(props.jsonData, null, 2)" style="font-size: 10px;" :hljs="undefined"/>
+        </n-text>
+      </n-scrollbar>
+    </n-card>
+  </n-modal>
 
 </template>
 

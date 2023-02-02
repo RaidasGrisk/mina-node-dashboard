@@ -5,12 +5,13 @@ import { useThemeVars } from 'naive-ui'
 
 import { BarChart } from 'vue-chart-3'
 import { Chart, registerables } from 'chart.js'
-import { options } from './defaultChartOptions'
+import { options } from './utils/defaultChartOptions'
 
 Chart.register(...registerables);
 
 const themeVars = useThemeVars()
 const data = ref({})
+const jsonData = ref({})
 
 // deep copy or else it will leak to other chart components
 const options_ = JSON.parse(JSON.stringify(options))
@@ -61,6 +62,7 @@ const loadData = async () => {
 
   let response_ = await response.json()
   response_ = response_[0]
+  jsonData.value = response_
 
   // set data element values
   data.value = {
@@ -91,7 +93,7 @@ onMounted( async () => {
 </script>
 
 <template>
-  <StatsCard :data="chartProps" :loading="loading" @reload="loadData">
+  <StatsCard :data="chartProps" :loading="loading" @reload="loadData" :jsonData="jsonData">
     <BarChart :chartData="data" :width="150" :height="141" :options="options_" />
   </StatsCard>
 </template>
