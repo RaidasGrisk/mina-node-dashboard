@@ -55,7 +55,7 @@ const emits = defineEmits(['reload'])
     <template #header-extra>
       <n-tooltip trigger="hover" :show-arrow="false">
         <template #trigger>
-          <n-button tertiary circle type="primary" size="small" :disabled="loading">
+          <n-button tertiary circle type="primary" size="small">
             <n-icon :size="14">
               <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 12 12"><g fill="none"><path d="M5.5 6.5a.5.5 0 0 1 1 0V8a.5.5 0 0 1-1 0V6.5zM6 3.75a.75.75 0 1 0 0 1.5a.75.75 0 0 0 0-1.5zM1 6a5 5 0 1 1 10 0A5 5 0 0 1 1 6zm5-4a4 4 0 1 0 0 8a4 4 0 0 0 0-8z" fill="currentColor"></path></g></svg>
             </n-icon>
