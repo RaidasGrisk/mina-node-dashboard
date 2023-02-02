@@ -22,7 +22,7 @@ const props = defineProps({
             {{ item.address.slice(0, 35) + ' ... ' + item.address.slice(-5) }}
           </a>
         </n-text>
-        <div class="flex-child short-and-fixed" style="padding-bottom: 3px;">
+        <div class="flex-child short-and-fixed" style="padding-bottom: 2px;">
           <div>
             <n-divider vertical style="height: 14px; width: 2px; margin-left: 16px;"/>
           </div>
@@ -33,7 +33,7 @@ const props = defineProps({
                   {{ item.stat }}
                 </n-text>
               </template>
-              Total blocks created
+              {{ item.tooltip }}
             </n-tooltip>
           </div>
         </div>

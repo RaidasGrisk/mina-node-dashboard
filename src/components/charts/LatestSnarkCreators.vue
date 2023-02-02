@@ -108,114 +108,13 @@ const loadData = async () => {
   result = result.map(item => {
     return {
       address: item.address,
-      stat: item.stat >= 100 ? '+100' : item.stat.toString()
+      stat: item.stat >= 100 ? '+100' : item.stat.toString(),
+      tooltip: 'Total snarks created'
     }
   })
 
   data.value = result
   loading.value = false
-
-
-
-
-
-
-
-
-
-  //
-  //
-  //
-  // loading.value = true
-  //
-  // // config
-  // const url = 'https://graphql.minaexplorer.com/'
-  //
-  // // API request
-  // const response = await fetch(url, {
-  //   method: 'POST',
-  //   headers: {
-  //     'Content-Type': 'application/json',
-  //   },
-  //   body: JSON.stringify({
-  //     query: `
-  //     query MyQuery {
-  //       snarks(limit: 30, sortBy: BLOCKHEIGHT_DESC, query: {canonical: true}) {
-  //         prover
-  //         blockHeight
-  //       }
-  //     }
-  //       `
-  //   }),
-  // })
-  //
-  // let response_ = await response.json()
-  //
-  // // helper functions
-  // const filterUnique = (value, index, self) => {
-  //   return self.findIndex(v => v.prover === value.prover) === index
-  // }
-  //
-  // // reverse
-  // response_ = response_.data.snarks
-  //
-  // // filter out duplicates
-  // response_ = response_.filter(filterUnique)
-  //
-  // // trim
-  // response_ = response_.slice(0, 7)
-  //
-  // // set data element values
-  // data.value = response_.map(i => i.prover)
-  //
-  // // run the other query to get the number of snarks produced by each address
-  // // start of by mapping address to number of snarks produced
-  // const address_mapping = {}
-  //
-  // // make an array of queries with selected creators
-  // let bodies = response_.map(i => JSON.stringify({
-  //   query: `
-  //   query MyQuery {
-  //     snarks(query: {prover_in: "${i.prover}", canonical: true}, limit: 100) {
-  //       blockHeight
-  //       prover
-  //     }
-  //   }
-  // `
-  // }))
-  //
-  // // make an array of fetch requests (but dont dispatch yet_)
-  // let requests = bodies.map(body_ => fetch(url, {
-  //   method: 'POST',
-  //   headers: {
-  //     'Content-Type': 'application/json',
-  //   },
-  //   body: body_,
-  // }))
-  //
-  // // dispatch all the requests at once
-  // let requests_ = await Promise.all(requests)
-  // let requests_data = await Promise.all(requests_.map(res => res.json()))
-  //
-  // // add the result to mapping
-  // for (const index in requests_data) {
-  //   let prover = requests_data[index].data.snarks[0].prover
-  //   address_mapping[prover] = requests_data[index].data.snarks.length
-  // }
-  // addressMapping.value = address_mapping
-  //
-  // loading.value = false
-}
-
-const addressCharCrop = () => {
-
-  // if modal is brought up, this width becomes 0,
-  // this messes up the rendering, hence this exception
-  if (width.value == 0) {
-    return 20
-  }
-  return Math.round(width.value / 19)
-
 }
 
 onMounted( async () => {
@@ -231,22 +130,5 @@ onMounted( async () => {
 </template>
 
 <style scoped>
-
-.codeStyles {
-  font-size: 0.8em
-}
-
-a {
-  color: v-bind(themeVars.infoColor);
-  text-decoration: inherit;
-}
-
-a:hover {
-  color: v-bind(themeVars.infoColorHover);
-}
-
-a:link:active, a:visited {
-  color: v-bind(themeVars.successColor);;
-}
 
 </style>
