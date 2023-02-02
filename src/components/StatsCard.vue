@@ -129,7 +129,7 @@ const emits = defineEmits(['reload'])
   <template>
     <n-modal v-model:show="showModal">
       <n-card
-        style="width: 600px"
+        style="max-width: 600px"
         :bordered="true"
         size="huge"
         :segmented="{
