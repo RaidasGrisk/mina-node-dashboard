@@ -34,39 +34,40 @@ onMounted( async () => {
 </script>
 
 <template>
+
+  <n-modal v-model:show="showModal">
+    <n-card style="width: 400px" :bordered="false" size="huge">
+      <n-text depth="3">
+        <n-space>
+          <span>
+            <b>Discord:</b> ioWxss6#6308
+            <n-tooltip placement="right" trigger="click" :show-arrow="false">
+              <template #trigger>
+                <n-button tertiary type="info" size="small" @click="copyToClipboard()">
+                  <template #icon>
+                    <n-icon>
+                      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24"><path opacity=".3" d="M8 7h11v14H8z" fill="currentColor"></path><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z" fill="currentColor"></path></svg>
+                    </n-icon>
+                  </template>
+                </n-button>
+              </template>
+              <span> Copied! </span>
+            </n-tooltip>
+          </span>
+          <span>
+            <b>Github:</b> <n-button text type="info">https://github.com/RaidasGrisk</n-button>
+          </span>
+      </n-space>
+    </n-text>
+    </n-card>
+  </n-modal>
+
   <div class="centered-text" style="padding: 5em 5em 5em 5em">
     <n-space :size="30" justify="center" vertical>
 
-      <n-text depth="3">
-        <n-space v-if="loading" vertical justify="center">
-          <n-skeleton :sharp="false" size="small" :width="164" :height="20" class="centered-text"></n-skeleton>
-          <n-skeleton :sharp="false" size="small" :width="64" :height="20" class="centered-text"></n-skeleton>
-        </n-space>
-        <div v-else>
-          <div v-if="data.length>0">
-            <n-space justify="center" vertical :size="3">
-              <span>
-                Latest <b>Mina</b> stable release:
-                <n-button text type="info" tag="a" :href="data[0].html_url" target="_blank">{{ data[0].tag_name }}</n-button>
-              </span>
-              <span>
-                Released:
-                <n-time :time="new Date(data[0].published_at)" format="yyyy-MM-dd" />
-              </span>
-            </n-space>
-          </div>
-        </div>
-        <n-button size="small" type="text" circle ghost :loading="loading" @click="getLatestMinaReleaseData()">
-          <template #icon>
-            <n-icon>
-              <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path d="M433,288.8c-7.7,0-14.3,5.9-14.9,13.6c-6.9,83.1-76.8,147.9-161.8,147.9c-89.5,0-162.4-72.4-162.4-161.4
-                c0-87.6,70.6-159.2,158.2-161.4c2.3-0.1,4.1,1.7,4.1,4v50.3c0,12.6,13.9,20.2,24.6,13.5L377,128c10-6.3,10-20.8,0-27.1l-96.1-66.4
-                c-10.7-6.7-24.6,0.9-24.6,13.5v45.7c0,2.2-1.7,4-3.9,4C148,99.8,64,184.6,64,288.9C64,394.5,150.1,480,256.3,480
-                c100.8,0,183.4-76.7,191.6-175.1C448.7,296.2,441.7,288.8,433,288.8L433,288.8z"></path></svg>
-            </n-icon>
-          </template>
-        </n-button>
-      </n-text>
+      <n-button @click="showModal = true" size="medium" strong secondary round type="info">
+        Contacts
+      </n-button>
 
       <n-tag round :bordered="true" :size="'large'" style="padding: 20px; min-height: 130px;">
         <n-space justify="center" vertical>
@@ -106,6 +107,37 @@ onMounted( async () => {
         </n-space>
       </n-tag>
 
+      <n-text depth="3">
+        <n-space v-if="loading" vertical justify="center">
+          <n-skeleton :sharp="false" size="small" :width="164" :height="20" class="centered-text"></n-skeleton>
+          <n-skeleton :sharp="false" size="small" :width="64" :height="20" class="centered-text"></n-skeleton>
+        </n-space>
+        <div v-else>
+          <div v-if="data.length>0">
+            <n-space justify="center" vertical :size="3">
+              <span>
+                Latest <b>Mina</b> stable release:
+                <n-button text type="info" tag="a" :href="data[0].html_url" target="_blank">{{ data[0].tag_name }}</n-button>
+              </span>
+              <span>
+                Released:
+                <n-time :time="new Date(data[0].published_at)" format="yyyy-MM-dd" />
+              </span>
+            </n-space>
+          </div>
+        </div>
+        <n-button size="small" type="text" circle ghost :loading="loading" @click="getLatestMinaReleaseData()">
+          <template #icon>
+            <n-icon>
+              <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path d="M433,288.8c-7.7,0-14.3,5.9-14.9,13.6c-6.9,83.1-76.8,147.9-161.8,147.9c-89.5,0-162.4-72.4-162.4-161.4
+                c0-87.6,70.6-159.2,158.2-161.4c2.3-0.1,4.1,1.7,4.1,4v50.3c0,12.6,13.9,20.2,24.6,13.5L377,128c10-6.3,10-20.8,0-27.1l-96.1-66.4
+                c-10.7-6.7-24.6,0.9-24.6,13.5v45.7c0,2.2-1.7,4-3.9,4C148,99.8,64,184.6,64,288.9C64,394.5,150.1,480,256.3,480
+                c100.8,0,183.4-76.7,191.6-175.1C448.7,296.2,441.7,288.8,433,288.8L433,288.8z"></path></svg>
+            </n-icon>
+          </template>
+        </n-button>
+      </n-text>
+
       <n-space vertical>
         <n-text depth="3">Data sources:</n-text>
         <n-space size="small" justify="center">
@@ -115,44 +147,9 @@ onMounted( async () => {
             { name: 'REST API', url: 'https://docs.minaexplorer.com/rest-api/' },
           ]">
             <n-button text type="info" tag="a" :href="item.url" target="_blank">{{ item.name }}</n-button>
-            <template #icon>
-              <n-icon :color="themeVars.successColor">
-                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24"><path d="M13 2.05v3.03c3.39.49 6 3.39 6 6.92c0 .9-.18 1.75-.48 2.54l2.6 1.53c.56-1.24.88-2.62.88-4.07c0-5.18-3.95-9.45-9-9.95zM12 19c-3.87 0-7-3.13-7-7c0-3.53 2.61-6.43 6-6.92V2.05c-5.06.5-9 4.76-9 9.95c0 5.52 4.47 10 9.99 10c3.31 0 6.24-1.61 8.06-4.09l-2.6-1.53A6.95 6.95 0 0 1 12 19z" fill="currentColor"></path></svg>
-              </n-icon>
-            </template>
           </n-tag>
         </n-space>
       </n-space>
-
-      <n-button @click="showModal = true" size="medium" strong secondary round type="info">
-        Contacts
-      </n-button>
-      <n-modal v-model:show="showModal">
-        <n-card style="width: 400px" :bordered="false" size="huge">
-          <n-text depth="3">
-            <n-space>
-              <span>
-                <b>Discord:</b> ioWxss6#6308
-                <n-tooltip placement="right" trigger="click" :show-arrow="false">
-                  <template #trigger>
-                    <n-button tertiary type="info" size="small" @click="copyToClipboard()">
-                      <template #icon>
-                        <n-icon>
-                          <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24"><path opacity=".3" d="M8 7h11v14H8z" fill="currentColor"></path><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z" fill="currentColor"></path></svg>
-                        </n-icon>
-                      </template>
-                    </n-button>
-                  </template>
-                  <span> Copied! </span>
-                </n-tooltip>
-              </span>
-              <span>
-                <b>Github:</b> <n-button text type="info">https://github.com/RaidasGrisk</n-button>
-              </span>
-          </n-space>
-        </n-text>
-        </n-card>
-      </n-modal>
 
     </n-space>
   </div>
