@@ -73,6 +73,12 @@ const loadData = async () => {
 
   // reverse
   response_ = response_.data.blocks.reverse()
+  response_ = response_.map(i => {
+    return {
+      blockHeight: i.blockHeight,
+      snarks: i.snarkJobs.length
+    }
+  })
   jsonData.value = response_
 
   // set data element values
@@ -80,14 +86,14 @@ const loadData = async () => {
     labels: response_.map(i => i.blockHeight),
     datasets: [
       {
-        data: response_.map(i => i.snarkJobs.length),
+        data: response_.map(i => i.snarks),
         backgroundColor: [themeVars.value.infoColor],
       },
     ],
   }
 
   // set other values
-  let array_ = response_.map(i => i.snarkJobs.length)
+  let array_ = response_.map(i => i.snarks)
   chartProps.additionalValues[0].value = array_.slice(-1)[0]
   chartProps.additionalValues[1].value = array_.reduce((a, b) => a + b, 0) / array_.length
 

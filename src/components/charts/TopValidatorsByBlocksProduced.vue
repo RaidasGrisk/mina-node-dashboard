@@ -104,7 +104,7 @@ const loadData = async () => {
 
   validators = validators.sort((a, b) => b.blocksProduced - a.blocksProduced)
 
-  jsonData.value = response_
+  jsonData.value = validators
 
   // set data element values
   data.value = {

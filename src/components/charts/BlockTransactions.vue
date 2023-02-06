@@ -78,6 +78,12 @@ const loadData = async () => {
 
   // reverse
   response_ = response_.data.blocks.reverse()
+  response_ = response_.map(i => {
+    return {
+      blockHeight: i.blockHeight,
+      transactions: i.transactions.userCommands.length
+    }
+  })
   jsonData.value = response_
 
   // set data element values
@@ -85,17 +91,17 @@ const loadData = async () => {
     labels: response_.map(i => i.blockHeight),
     datasets: [
       {
-        data: response_.map(i => i.transactions.userCommands.length),
+        data: response_.map(i => i.transactions),
         backgroundColor: [themeVars.value.infoColor],
       },
     ],
   }
 
   // set other values
-  chartProps.additionalValues[0].value = response_.slice(-1)[0].transactions.userCommands.length
+  chartProps.additionalValues[0].value = response_.slice(-1)[0].transactions
   chartProps.additionalValues[1].value = ((
-    response_.slice(-1)[0].transactions.userCommands.length /
-    response_[0].transactions.userCommands.length
+    response_.slice(-1)[0].transactions /
+    response_[0].transactions
   ) - 1 ) * 100
 
   loading.value = false
