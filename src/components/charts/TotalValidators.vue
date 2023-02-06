@@ -30,9 +30,6 @@ const chartProps = {
     Above all, validators are pieces of hardware that run Mina software. The combination of all the validators and SNARK workers forms the foundation of Mina network.
   </p>
   <p>
-    Validators are randomly selected to create new blocks.
-  </p>
-  <p>
     Validators are maintained primarily by Mina community and volunteers, who typically dedicate separate hardware to the process.
   </p>
   <p>

@@ -22,7 +22,7 @@ const chartProps = {
     Public keys of the latest block creators. In other words, this is a list of addresses of validators that created the most recent blocks.
   </p>
   <p>
-    The number on the right side shows how many blocks have this validator created in total. So if the number is small, this is a new validator.
+    The number on the right side shows how many blocks have this validator created in total. If the number is small, this is a new validator.
     A big number indicates that the validator has been actively producing blocks for a long time.
   </p>
   <p>

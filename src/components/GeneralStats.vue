@@ -142,11 +142,9 @@ defineExpose({
                   <div class="tooltip">
                     <p>
                       Block is an abstraction that batches transactions and state changes together in a distributed ledger maintained by a network.
-                      Block is a collection of transaction data that is added to the blockchain in a linear, chronological order.
                     </p>
                     <p>
-                      Blocks contain a set of transactions and consensus information that extend the state of the network.
-                      It also includes a proof that the current state of the network is fully valid.
+                      Each slot is an opportunity for a block to be added to the Blockchain. So a new block can be created every 3 minutes.
                     </p>
                   </div>
                 </n-tooltip>

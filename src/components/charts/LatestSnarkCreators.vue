@@ -23,7 +23,7 @@ const chartProps = {
   </p>
   <p>
     The number on the right side shows how many snarks have this worker created in total.
-    So if the number is small, this is a new worker. A big number indicates that the worker has been actively producing snarks for a long time.
+    If the number is small, this is a new worker. A big number indicates that the worker has been actively producing snarks for a long time.
   </p>
   <p>
     By clicking on the worker address, you can visit MINA's block explorer and explore the worker account further.
