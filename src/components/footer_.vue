@@ -55,7 +55,8 @@ onMounted( async () => {
             </n-tooltip>
           </span>
           <span>
-            <b>Github:</b> <n-button text type="info">https://github.com/RaidasGrisk</n-button>
+            <b>Github: </b>
+            <n-button text type="info" tag="a" href="https://github.com/RaidasGrisk" target="_blank">github.com/RaidasGrisk</n-button>
           </span>
       </n-space>
     </n-text>
