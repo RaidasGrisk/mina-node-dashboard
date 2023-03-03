@@ -1,7 +1,9 @@
 # Notes
+
 ### data sources
-https://docs.minaexplorer.com/rest-api/ref#get-summary  
-https://graphql.minaexplorer.com/  
+[GraphQL API](https://graphql.minaexplorer.com/)  
+[BigQuery Dataset](https://docs.minaexplorer.com/minaexplorer/bigquery-public-dataset)  
+[Rest API](https://docs.minaexplorer.com/rest-api/ref#get-summary)  
 
 ### general stats
 - [x] chain length  
