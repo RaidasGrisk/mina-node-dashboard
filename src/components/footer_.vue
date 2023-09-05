@@ -4,7 +4,6 @@ import { useThemeVars } from 'naive-ui'
 
 const data = ref([])
 const loading = ref(false)
-const showModal = ref(false)
 const themeVars = useThemeVars()
 
 const getLatestMinaReleaseData = async () => {
@@ -38,40 +37,8 @@ onMounted( async () => {
 
 <template>
 
-  <n-modal v-model:show="showModal">
-    <n-card style="width: 400px" :bordered="false" size="huge">
-      <n-text depth="3">
-        <n-space>
-          <span>
-            <b>Discord:</b> ioWxss6#6308
-            <n-tooltip placement="right" trigger="click" :show-arrow="false">
-              <template #trigger>
-                <n-button tertiary type="info" size="small" @click="copyToClipboard()">
-                  <template #icon>
-                    <n-icon>
-                      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24"><path opacity=".3" d="M8 7h11v14H8z" fill="currentColor"></path><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z" fill="currentColor"></path></svg>
-                    </n-icon>
-                  </template>
-                </n-button>
-              </template>
-              <span> Copied! </span>
-            </n-tooltip>
-          </span>
-          <span>
-            <b>Github: </b>
-            <n-button text type="info" tag="a" href="https://github.com/RaidasGrisk" target="_blank">github.com/RaidasGrisk</n-button>
-          </span>
-      </n-space>
-    </n-text>
-    </n-card>
-  </n-modal>
-
   <div class="centered-text" style="padding: 5em 5em 5em 5em">
     <n-space :size="30" justify="center" vertical>
-
-      <n-button @click="showModal = true" size="medium" strong secondary round type="info">
-        Contacts
-      </n-button>
 
       <n-tag round :bordered="true" :size="'large'" style="padding: 20px; min-height: 130px;">
         <n-space justify="center" vertical>
