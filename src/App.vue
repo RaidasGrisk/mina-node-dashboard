@@ -18,14 +18,16 @@ import LatestSnarkCreators from './components/charts/LatestSnarkCreators.vue'
 import StakeDistribution from './components/charts/StakeDistribution.vue'
 
 import { ref } from 'vue'
+import { useBreakpoint } from 'vooks'
 import { useStore } from 'vuex'
-import { Chart, registerables } from "chart.js";
+import { Chart, registerables } from 'chart.js'
 
-Chart.register(...registerables);
+Chart.register(...registerables)
 Chart.defaults.font.size = 10
 Chart.defaults.font.family = '"Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif'
 
 const store = useStore()
+const breakpoint = useBreakpoint()
 const generalStatsRef = ref()
 
 // put charts into an array, then render in a v-for loop
@@ -58,7 +60,18 @@ const reload = () => {
       <n-loading-bar-provider>
         <n-layout>
           <header_ @logoClick="reload" />
-          <n-layout-content content-style="max-width: 130vh; margin: 0 auto; padding: 2em;">
+          <!-- This is not very conveniant, but it works 🤷 -->
+          <n-layout-content
+            :content-style="
+              'margin: 0 auto;' +
+                (['xs'].includes(breakpoint) ? 'padding: 3em 2em 3em 2em;' : '') +
+                (['s'].includes(breakpoint) ? 'padding: 3em 3em 3em 3em;' : '') +
+                (['m'].includes(breakpoint)  ? 'padding: 6em 6em 6em 6em;' : '') +
+                (['l'].includes(breakpoint)  ? 'padding: 6em 10em 6em 10em;' : '') +
+                (['xl'].includes(breakpoint)  ? 'padding: 6em 20em 6em 20em;' : '') +
+                (['xxl', '2xl'].includes(breakpoint)  ? 'padding: 6em 25em 6em 25em;' : '')
+              "
+            >
             <GeneralStats ref="generalStatsRef"/>
             <div style="padding: 3em 0em 3em 0em;">
               <n-grid :x-gap="12" :y-gap="12" cols="1 s:2 m:3 l:3 xl:3 2xl:4" responsive="screen">
