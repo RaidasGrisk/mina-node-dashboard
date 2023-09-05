@@ -111,7 +111,7 @@ const loadData = async () => {
   result = result.map(item => {
     return {
       address: item.address,
-      stat: item.stat >= 100 ? '+100' : item.stat.toString(),
+      stat: item.stat >= 100 ? '100+' : item.stat.toString(),
       tooltip: 'Total snarks created'
     }
   })
