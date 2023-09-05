@@ -55,7 +55,7 @@ const emits = defineEmits(['reload'])
     :header-style="headerStyle"
     :content-style="contentStyle"
     :footer-style="footerStyle"
-    style="border-radius: 8px; min-width: 20em; min-height: 16.5em;"
+    style="min-width: 20em; min-height: 16.5em;"
     hoverable
   >
     <template #header>
