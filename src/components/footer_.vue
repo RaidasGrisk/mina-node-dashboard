@@ -18,6 +18,9 @@ const getLatestMinaReleaseData = async () => {
   let response = await fetch(url, {  method: 'GET' })
   response = await response.json()
 
+  // filter out only mainnet releases (drop testnets)
+  response = response.filter(item => item.name.toLowerCase().includes('mainnet'))
+
   data.value = response
   loading.value = false
 }
