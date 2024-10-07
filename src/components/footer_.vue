@@ -1,10 +1,8 @@
 <script setup>
 import { ref, onMounted } from 'vue'
-import { useThemeVars } from 'naive-ui'
 
 const data = ref([])
 const loading = ref(false)
-const themeVars = useThemeVars()
 
 const getLatestMinaReleaseData = async () => {
 
