@@ -11,6 +11,9 @@
   "dependencies": {
     "@vercel/analytics": "^0.1.10",
     "highlight.js": "^11.7.0",
+    "leaflet": "^1.9.4",
+    "leaflet.heat": "^0.2.0",
+    "leaflet.markercluster": "^1.5.3",
     "vue": "^3.2.45",
     "vue-chart-3": "^3.1.8",
     "vuex": "^4.0.2"
