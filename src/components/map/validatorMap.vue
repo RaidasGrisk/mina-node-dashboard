@@ -1,5 +1,6 @@
 <script setup>
 import { ref, onMounted } from 'vue'
+import { useLoadingBar } from 'naive-ui'
 import raw_data from './data.json'
 
 import * as L from 'leaflet'
@@ -11,6 +12,7 @@ import 'leaflet.heat'
 
 const map = ref(null)
 const mapContainer = ref(null)
+const loadingBar = useLoadingBar()
 
 const initMap = () => {
 
@@ -58,7 +60,8 @@ const initMap = () => {
 }
 
 onMounted(() => {
-  setTimeout(() => { initMap() }, 100) 
+  loadingBar.start()
+  setTimeout(() => { initMap(); loadingBar.finish() }, 100) 
   console.log(raw_data)
 })
 
