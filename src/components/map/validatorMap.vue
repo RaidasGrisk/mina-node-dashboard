@@ -1,7 +1,6 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useLoadingBar } from 'naive-ui'
-import raw_data from './data.json'
 
 import * as L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
@@ -12,13 +11,21 @@ import 'leaflet.heat'
 
 const map = ref(null)
 const mapContainer = ref(null)
+const raw_data = ref(null)
 const loadingBar = useLoadingBar()
+
+const fetchData = async () => {
+  const url = 'https://raw.githubusercontent.com/RaidasGrisk/mina-node-map/refs/heads/master/data.json'
+  const response = await fetch(url)
+  const data = response.json()
+  return data
+}
 
 const initMap = () => {
 
   // proprocess data by filtering out some keys
   const keysToKeep = ['datacenter', 'company', 'abuse', 'asn', 'location']
-  const data = raw_data.map(json => {
+  const data = raw_data.value.map(json => {
     const json_ = {}
     keysToKeep.forEach(key => { json_[key] = json[key]})
     return json_
@@ -59,10 +66,18 @@ const initMap = () => {
 
 }
 
-onMounted(() => {
+onMounted( async () => {
   loadingBar.start()
-  setTimeout(() => { initMap(); loadingBar.finish() }, 100) 
-  console.log(raw_data)
+
+  // fetch and save data
+  raw_data.value = await fetchData()
+  console.log(raw_data.value)
+
+  // init map
+  setTimeout(() => { 
+    initMap() 
+    loadingBar.finish() 
+  }, 100)
 })
 
 </script>
